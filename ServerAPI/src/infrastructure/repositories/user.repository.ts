@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client/extension";
 import Repository from "./generic.repository";
-import { User } from 'models/user.model';
+import { User } from "../models/user.model";
 
 export default class UserRepository extends Repository<User> {
   prisma: PrismaClient;

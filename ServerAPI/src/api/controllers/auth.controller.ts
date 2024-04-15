@@ -1,15 +1,20 @@
-import { responseHandler } from "middlewares/response.middleware";
-import { AuthBase, AuthLogin, AuthLoginSuccess } from "models/auth.model";
-import AuthRepository from "repositories/auth.repository";
-import UserRepository from "repositories/user.repository";
+// import { responseHandler } from "src/middlewares/response.middleware";
 import { Body, Post, Route, SuccessResponse, Tags } from "tsoa";
-import { ResponseSuccessType } from "types/request.types";
-import { db } from "../../config/database";
+import {
+  AuthBase,
+  AuthLogin,
+  AuthLoginSuccess,
+} from "../../application/dtos/auth.dto";
+import { db } from "../../config/prisma";
+import { responseHandler } from "../../middlewares/response.middleware";
+import AuthRepository from "../../repositories/auth.repository";
+import UserRepository from "../../repositories/user.repository";
+import { ResponseSuccessType } from "../../types/request.types";
 import AuthServices from "./auth.service";
 
 const database = db();
 
-@Tags("Customer Authentication")
+@Tags("Authentication")
 @Route("auth")
 export class AuthRoute {
   @Post("register")

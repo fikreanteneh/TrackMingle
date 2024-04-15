@@ -1,6 +1,6 @@
-import { Auth } from "./auth.model";
-import { Friend } from "./friend.model";
-import { FriendRequest } from "./friend.request.model";
+import { Auth } from "./auth.dto";
+import { Friend } from "./friend.dto";
+import { FriendRequest } from "./friend.request.dto";
 
 export interface User {
   id?: string;

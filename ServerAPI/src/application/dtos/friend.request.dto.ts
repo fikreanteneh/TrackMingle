@@ -1,4 +1,4 @@
-import { User } from "./user.model";
+import { User } from "./user.dto";
 
 export interface FriendRequest {
   id?: string;
@@ -8,7 +8,6 @@ export interface FriendRequest {
   Sender?: User;
   Receiver?: User;
 }
-
 
 export interface FriendRequestBase {
   senderId: string;

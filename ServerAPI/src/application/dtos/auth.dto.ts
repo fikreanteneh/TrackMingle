@@ -1,4 +1,4 @@
-import { User } from "./user.model";
+import { User } from "./user.dto";
 
 export enum EnumRole {
   ADMIN = "ADMIN",
@@ -16,22 +16,19 @@ export interface Auth {
   User?: User;
 }
 
-
-export interface AuthBase { 
-    email: string;
-    password: string;
-    oauth: boolean;
-    role: EnumRole;
-    username: string;
+export interface AuthBase {
+  email: string;
+  password: string;
+  oauth: boolean;
+  role: EnumRole;
+  username: string;
 }
-
 
 export interface AuthLogin {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
 }
 
-
-export interface AuthLoginSuccess { 
-    token: string;
+export interface AuthLoginSuccess {
+  token: string;
 }

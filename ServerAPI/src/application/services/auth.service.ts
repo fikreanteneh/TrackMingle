@@ -8,15 +8,11 @@ import {
 import AuthRepository from "repositories/auth.repository";
 import UserRepository from "repositories/user.repository";
 import { encodeToken } from "utils/tokens";
-import { comparePassword, hashPassword } from "./../../utils/password";
+import { comparePassword, hashPassword } from "../../utils/password";
 
 export default class AuthServices {
-  private authRepository: AuthRepository;
-  private userRepository: UserRepository;
-
   constructor(authRepository: AuthRepository, userRepository: UserRepository) {
-    this.authRepository = authRepository;
-    this.userRepository = userRepository;
+
   }
 
   async register(payload: AuthBase): Promise<AuthLoginSuccess> {
