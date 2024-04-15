@@ -1,34 +1,30 @@
 import { User } from "./user.dto";
 
-export enum EnumRole {
-  ADMIN = "ADMIN",
-  USER = "USER",
+
+export interface AuthDetailDTO {
+  id: string;
+  email: string | undefined;
+  phone: string | undefined;
+  role: string | undefined;
+  createdAt: string;
+  updatedAt: string | undefined;
 }
 
-export interface Auth {
-  id?: string;
-  createdAt?: Date;
+export interface AuthRegisterDTO {
   email: string;
   password: string;
-  oauth: boolean;
-  phoneNumber?: string;
-  role: EnumRole;
-  User?: User;
-}
-
-export interface AuthBase {
-  email: string;
-  password: string;
-  oauth: boolean;
-  role: EnumRole;
   username: string;
-}
+  fullName: string;
+  
 
-export interface AuthLogin {
+ }
+export interface AuthLoginDTO {
   email: string;
   password: string;
 }
 
-export interface AuthLoginSuccess {
+
+
+export interface AuthTokenDTO {
   token: string;
 }

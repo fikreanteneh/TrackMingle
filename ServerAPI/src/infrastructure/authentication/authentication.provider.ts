@@ -1,5 +1,6 @@
 import SupabaseClient from "@supabase/supabase-js/dist/module/SupabaseClient";
 import { IAuthenticationProvider } from "../../application/interfaces/authentication/authentication.provider";
+import { AuthDetailDTO, AuthTokenDTO } from "../../application/dtos/auth.dto";
 
 export default class AuthenticationProvider implements IAuthenticationProvider {
     private readonly supabase: SupabaseClient;
@@ -7,21 +8,26 @@ export default class AuthenticationProvider implements IAuthenticationProvider {
     constructor(supabase: SupabaseClient) { 
         this.supabase = supabase;
     }
-    async login(currUser: any, dtos: any, param: any): Promise<string> {
-         const { data, error } = await this.supabase.auth.admin.createUser({
-           email: dtos.email,
-           password: dtos.password,
-           user_metadata: { role: "User" },
-         });
+    async login(currUser: any, dtos: any, param: any): Promise<AuthTokenDTO> {
+        
+    }
+    async register(currUser: any, dtos: any, param: any): Promise<AuthDetailDTO> {
+        const { data, error } = await this.supabase.auth.admin.createUser({
+          email: dtos.email,
+          password: dtos.password,
+          role: "User",
+        });
         if (error) throw error;
         return {
-            us: data.user.
-        }
+          id: data.user.id,
+          email: data.user.email,
+          phone: data.user.phone,
+          role: data.user.role,
+          createdAt: data.user.created_at,
+          updatedAt: data.user.updated_at,
+        };
     }
-    async register(currUser: any, dtos: any, param: any): Promise<string> {
-        throw new Error("Method not implemented.");
-    }
-    async verify(currUser: any, dtos: any, param: any): Promise<boolean> {
-        throw new Error("Method not implemented.");
+    async verify(currUser: any, dtos: any, param: any): Promise<AuthDetailDTO> {
+         
     }
 }
