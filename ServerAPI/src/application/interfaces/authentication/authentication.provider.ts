@@ -1,7 +1,6 @@
 
-export interface IAuthenticationProvider { 
-    login(username: string, password: string): Promise<string>;
-    register(username: string, password: string): Promise<string>;
-    logout(token: string): Promise<void>;
-    verify(token: string): Promise<boolean>;
+export interface IAuthenticationProvider {
+  login(currUser: any, dtos: any, param: any): Promise<string>;
+  register(currUser: any, dtos: any, param: any): Promise<string>;
+  verify(currUser:any, dtos: any, param:any): Promise<boolean>;
 }
