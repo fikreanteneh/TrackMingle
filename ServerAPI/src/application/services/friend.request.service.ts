@@ -5,7 +5,7 @@ import { IFriendRepository } from "../interfaces/persistence/friend.repository";
 import { IFriendRequestRepository } from "../interfaces/persistence/friend.request.repository";
 import FriendRepository from './../../infrastructure/repositories/friend.repository';
 
-class FriendRequestService {
+export class FriendRequestService {
     private friendRequestRepository: IFriendRequestRepository;
     private FriendRepository: IFriendRepository;
   constructor(friendRequestRepository: IFriendRequestRepository, friendRepository: IFriendRepository) {
@@ -55,8 +55,8 @@ class FriendRequestService {
   public async acceptFriendRequest(
     currUser: AuthDetailDTO,
     payload: null,
-    params: FriendRequestGetParam
-  ): Promise<void> {
+    params: IDParam
+  ): Promise<any> {
       //TODO: Transaction
     const data = await this.friendRequestRepository.getByID(params.id);
       if (!data) throw new Error("Friend Request Not Found");
@@ -71,6 +71,7 @@ class FriendRequestService {
           friendId: data.senderId,
         }),
       ]);
+      return data;
       
       
   }

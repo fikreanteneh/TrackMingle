@@ -1,15 +1,16 @@
+import { AuthDetailDTO } from "../../application/dtos/auth.dto";
+import AuthenticationError from "../../application/errors/authentication.error";
+import UnknownError from "../../application/errors/unknown.error";
+import supabase from "../../config/supabase";
+import AuthenticationProvider from './../../infrastructure/authentication/authentication.provider';
 import { Request } from "express";
-import AuthenticationError from "../errors/authentication.error";
-import UnknownError from "../errors/unknown.error";
-import {} from "../types/token.types";
-import { decodeToken } from "../utils/tokens";
-import { AuthenticatedUser } from "./../types/token.types";
+
 
 const expressAuthentication = async (
   request: Request,
   securityName: string,
   scopes?: string[]
-): Promise<AuthenticatedUser> => {
+): Promise<AuthDetailDTO> => {
   if (!scopes) throw new UnknownError();
   return new Promise((resolve, reject) => {
     const bearer = (request.headers.Authorization ||
@@ -17,7 +18,7 @@ const expressAuthentication = async (
       "") as string;
     if (!bearer) reject(new AuthenticationError());
     const token = bearer.split(" ")[1].trim();
-    const authenticatedUser = decodeToken(token);
+    const authenticatedUser = new AuthenticationProvider(supabase()).verify({ token });
     resolve(authenticatedUser);
   });
 };

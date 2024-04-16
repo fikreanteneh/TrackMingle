@@ -23,3 +23,10 @@ export const responseHandler = (data: any) => {
     response: data,
   };
 };
+
+
+export interface ResponseSuccessType<T> { 
+  success: boolean;
+  error: null;
+  response: T;
+}

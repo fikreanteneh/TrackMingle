@@ -2,12 +2,12 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
 import { Pool } from "pg";
 
-let prisma: PrismaClient;
+let prismaClient: PrismaClient;
 
-export const db = () => {
-  if (prisma) return prisma;
+export const prisma = () => {
+  if (prismaClient) return prismaClient;
   const pool = new Pool({ connectionString: `${process.env.DATABASE_URL}` });
   const adapter = new PrismaPg(pool);
-  prisma = new PrismaClient({ adapter });
-  return prisma;
+  prismaClient = new PrismaClient({ adapter });
+  return prismaClient;
 };

@@ -1,9 +1,9 @@
 {
   "entryFile": "src/index.ts",
   "noImplicitAdditionalProperties": "throw-on-extras",
-  "controllerPathGlobs": ["src/feat/*/*.controller.ts"],
+  "controllerPathGlobs": ["src/api/controllers/*.controller.ts"],
   "spec": {
-    "outputDirectory": "src/swagger",
+    "outputDirectory": "src/api/swagger",
     "specVersion": 3,
     "securityDefinitions": {
       "BearerAuth": {
@@ -14,7 +14,7 @@
     }
   },
   "routes": {
-    "routesDir": "src/routes",
-    "authenticationModule": "src/middlewares/authentication.middleware.ts"
+    "routesDir": "src/api/routes",
+    "authenticationModule": "src/api/middlewares/authentication.middleware.ts"
   }
 }

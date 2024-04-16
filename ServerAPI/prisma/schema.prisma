@@ -9,46 +9,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum EnumRole {
-  ADMIN
-  USER
-}
-
-model Auth {
-  id          String   @id @unique @default(uuid())
-  createdAt   DateTime @default(now())
-  email       String  @unique
-  password    String
-  oauth       Boolean
-  phoneNumber String?  @unique
-  role        EnumRole
-  User        User?
-}
 
 model User {
-  id               String          @id @unique
+  id               String          @id @default(uuid())
   username         String          @unique
   fullName         String?
-  email            String?         @unique
+  email            String          @unique
   phoneNumber      String?
   twitter          String?
   linkedin         String?
   facebook         String?
   instagram        String?
-  auth             Auth            @relation(fields: [id], references: [id])
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt @default(now())
   SentRequests     FriendRequest[] @relation("FriendRequestsSent")
   ReceivedRequests FriendRequest[] @relation("FriendRequestsReceived")
   User             Friend[]        @relation("Users")
   Friends          Friend[]        @relation("FriendUsers")
-}
-
-model FriendRequest {
-  id         String   @id @default(uuid())
-  senderId   String
-  receiverId String
-  createdAt  DateTime @default(now())
-  Sender     User     @relation("FriendRequestsSent", fields: [senderId], references: [id])
-  Receiver   User     @relation("FriendRequestsReceived", fields: [receiverId], references: [id])
 }
 
 model Friend {
@@ -58,4 +35,13 @@ model Friend {
   createdAt DateTime @default(now())
   User      User     @relation("Users", fields: [userId], references: [id])
   Friend    User     @relation("FriendUsers", fields: [friendId], references: [id])
+}
+
+model FriendRequest {
+  id         String   @id @default(uuid())
+  senderId   String
+  receiverId String
+  createdAt  DateTime @default(now())
+  Sender     User     @relation("FriendRequestsSent", fields: [senderId], references: [id])
+  Receiver   User     @relation("FriendRequestsReceived", fields: [receiverId], references: [id])
 }
