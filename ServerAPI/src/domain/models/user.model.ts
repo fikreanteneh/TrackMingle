@@ -12,4 +12,7 @@ export interface UserModel extends BaseModel {
   phoneNumber?: string;
   createdAt?: Date;
   updatedAt?: Date;
+  Friends?: UserModel[];
+  SentRequests?: UserModel[];
+  ReceivedRequests?: UserModel[];
 }

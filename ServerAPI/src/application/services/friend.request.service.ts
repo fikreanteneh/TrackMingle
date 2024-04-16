@@ -1,42 +1,87 @@
-import { Auth } from "@prisma/client";
-import { FriendRequestDetailDTO } from "../dtos/friend.request.dto";
-import { IFriendRequestRepository } from "../interfaces/persistence/friend.request.repository";
 import { AuthDetailDTO } from "../dtos/auth.dto";
+import { FriendRequestGetParam } from "../dtos/friend.request.dto";
+import { IDParam, PageParam } from "../dtos/request.dto";
+import { IFriendRepository } from "../interfaces/persistence/friend.repository";
+import { IFriendRequestRepository } from "../interfaces/persistence/friend.request.repository";
+import FriendRepository from './../../infrastructure/repositories/friend.repository';
 
 class FriendRequestService {
-  private friendRequestRepository: IFriendRequestRepository;
-  constructor(private friendRequestRepository: IFriendRequestRepository) {
-    this.friendRequestRepository = friendRequestRepository;
+    private friendRequestRepository: IFriendRequestRepository;
+    private FriendRepository: IFriendRepository;
+  constructor(friendRequestRepository: IFriendRequestRepository, friendRepository: IFriendRepository) {
+      this.friendRequestRepository = friendRequestRepository;
+      this.FriendRepository = friendRepository;
   }
 
-    public async getFriendRequests(
-        currUser: AuthDetailDTO,
-        params: { pageSize: number; pageNumber: number }
-  ): Promise<FriendRequestDetailDTO[]> {
-    return await this.friendRequestRepository.getByReceiverID(userId);
+  public async getFriendRequests(
+    currUser: AuthDetailDTO,
+    payload: null,
+    params: FriendRequestGetParam
+  ): Promise<any> {
+    //TODO: Implement Filtering Response Data
+    const data = await this.friendRequestRepository.getByReceiverID(
+      params.id,
+      params.pageSize,
+      params.pageNumber
+    );
+    return data;
   }
 
   public async getSentFriendRequests(
-    userId: string
-  ): Promise<FriendRequestDetailDTO[]> {
-    return await this.friendRequestRepository.getSentFriendRequests(userId);
+    currUser: AuthDetailDTO,
+    payload: null,
+    params: FriendRequestGetParam
+  ): Promise<any> {
+    //TODO: Implement Filtering Response Data
+    return await this.friendRequestRepository.getBySenderID(
+      params.id,
+      params.pageSize,
+      params.pageNumber
+    );
   }
 
   public async createFriendRequest(
-    request: CreateFriendRequestDTO
-  ): Promise<void> {
-    await this.friendRequestRepository.createFriendRequest(request);
+    currUser: AuthDetailDTO,
+    payload: null,
+    params: IDParam
+  ): Promise<any> {
+    //TODO: Impemnt filtering
+    await this.friendRequestRepository.create({
+      senderId: currUser.id,
+      receiverId: params.id,
+    });
   }
 
   public async acceptFriendRequest(
-    request: AcceptFriendRequestDTO
+    currUser: AuthDetailDTO,
+    payload: null,
+    params: FriendRequestGetParam
   ): Promise<void> {
-    await this.friendRequestRepository.acceptFriendRequest(request);
+      //TODO: Transaction
+    const data = await this.friendRequestRepository.getByID(params.id);
+      if (!data) throw new Error("Friend Request Not Found");
+      await Promise.all([
+        this.friendRequestRepository.delete(data),
+        this.FriendRepository.create({
+          userId: data.senderId,
+          friendId: data.receiverId,
+        }),
+        this.FriendRepository.create({
+          userId: data.receiverId,
+          friendId: data.senderId,
+        }),
+      ]);
+      
+      
   }
 
   public async rejectFriendRequest(
-    request: RejectFriendRequestDTO
+    currUser: AuthDetailDTO,
+    payload: null,
+    params: FriendRequestGetParam
   ): Promise<void> {
-    await this.friendRequestRepository.rejectFriendRequest(request);
+      const data = await this.friendRequestRepository.getByID(params.id);
+      if (!data) throw new Error("Friend Request Not Found");
+      await this.friendRequestRepository.delete(data);
   }
 }

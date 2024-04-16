@@ -1,5 +1,6 @@
 
 import { BaseDTO } from './base.dto';
+import { IDParam, PageParam } from './request.dto';
 import { UserDTO } from './user.dto';
 
 
@@ -16,6 +17,6 @@ export interface FriendRequestDetailDTO extends FriendRequestDTO {
 
 
 
-export interface FriendRequestParam {
-  userId: string;
+export interface FriendRequestGetParam extends IDParam, PageParam {
 }
+
