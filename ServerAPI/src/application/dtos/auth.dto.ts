@@ -1,8 +1,5 @@
-import { User } from "./user.dto";
-
-
-export interface AuthDetailDTO {
-  id: string;
+import { BaseDTO } from './base.dto';
+export interface AuthDetailDTO extends BaseDTO {
   email: string | undefined;
   phone: string | undefined;
   role: string | undefined;
@@ -15,15 +12,11 @@ export interface AuthRegisterDTO {
   password: string;
   username: string;
   fullName: string;
-  
-
- }
+}
 export interface AuthLoginDTO {
   email: string;
   password: string;
 }
-
-
 
 export interface AuthTokenDTO {
   token: string;

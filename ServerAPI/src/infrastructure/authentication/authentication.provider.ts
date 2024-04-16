@@ -34,7 +34,7 @@ export default class AuthenticationProvider implements IAuthenticationProvider {
     const { data, error } = await this.supabase.auth.admin.createUser({
       email: dtos.email,
       password: dtos.password,
-      role: "User",
+      // role: "User",
     });
     if (error) throw error;
     return {
