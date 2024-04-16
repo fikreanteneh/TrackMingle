@@ -13,7 +13,7 @@ export default class AuthenticationProvider implements IAuthenticationProvider {
   constructor(supabase: SupabaseClient) {
     this.supabase = supabase;
   }
-  async login(
+  async signin(
     currUser: null,
     dtos: AuthLoginDTO,
     param: null
@@ -51,9 +51,17 @@ export default class AuthenticationProvider implements IAuthenticationProvider {
     dtos: AuthTokenDTO,
     param: null
   ): Promise<AuthDetailDTO> {
-    const { data, error } = await this.supabase.auth.getSession(
+    const { data, error } = await this.supabase.auth.getUser(
       dtos.token
     );
-    throw new Error("Method not implemented.");
+    if (error) throw new Error("Unauthorized")
+    return {
+      id: data.user.id,
+      email: data.user.email,
+      phone: data.user.phone,
+      role: data.user.role,
+      createdAt: data.user.created_at,
+      updatedAt: data.user.updated_at,
+    };
   }
 }
