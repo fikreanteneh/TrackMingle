@@ -1,8 +1,8 @@
 import { BaseModel } from "./base.model";
 
 export interface UserModel extends BaseModel {
+  username: string;
   profilePicture?: string;
-  username?: string;
   fullName?: string;
   email?: string;
   twitter?: string;
@@ -10,4 +10,6 @@ export interface UserModel extends BaseModel {
   facebook?: string;
   instagram?: string;
   phoneNumber?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

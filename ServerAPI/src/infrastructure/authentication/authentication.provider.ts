@@ -13,27 +13,19 @@ export default class AuthenticationProvider implements IAuthenticationProvider {
   constructor(supabase: SupabaseClient) {
     this.supabase = supabase;
   }
-  async signin(
-    currUser: null,
-    dtos: AuthLoginDTO,
-    param: null
-  ): Promise<AuthTokenDTO> {
+  async signin(payload: AuthLoginDTO): Promise<AuthTokenDTO> {
     const { data, error } = await this.supabase.auth.signInWithPassword({
-      email: dtos.email,
-      password: dtos.password,
+      email: payload.email,
+      password: payload.password,
     });
     if (error) throw error;
     return { token: data.session.access_token };
   }
 
-  async register(
-    currUser: null,
-    dtos: AuthRegisterDTO,
-    param: null
-  ): Promise<AuthDetailDTO> {
+  async register(payload: AuthRegisterDTO): Promise<AuthDetailDTO> {
     const { data, error } = await this.supabase.auth.admin.createUser({
-      email: dtos.email,
-      password: dtos.password,
+      email: payload.email,
+      password: payload.password,
       // role: "User",
     });
     if (error) throw error;
@@ -46,15 +38,9 @@ export default class AuthenticationProvider implements IAuthenticationProvider {
       updatedAt: data.user.updated_at,
     };
   }
-  async verify(
-    currUser: null,
-    dtos: AuthTokenDTO,
-    param: null
-  ): Promise<AuthDetailDTO> {
-    const { data, error } = await this.supabase.auth.getUser(
-      dtos.token
-    );
-    if (error) throw new Error("Unauthorized")
+  async verify(payload: AuthTokenDTO): Promise<AuthDetailDTO> {
+    const { data, error } = await this.supabase.auth.getUser(payload.token);
+    if (error) throw new Error("Unauthorized");
     return {
       id: data.user.id,
       email: data.user.email,

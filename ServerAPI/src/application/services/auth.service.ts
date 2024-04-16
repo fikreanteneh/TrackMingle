@@ -1,61 +1,35 @@
-import {
-  Auth,
-  AuthBase,
-  AuthLogin,
-  AuthLoginSuccess,
-  EnumRole,
-} from "models/auth.model";
-import AuthRepository from "repositories/auth.repository";
-import UserRepository from "repositories/user.repository";
-import { encodeToken } from "utils/tokens";
-import { comparePassword, hashPassword } from "../../utils/password";
+import { AuthDetailDTO, AuthLoginDTO, AuthRegisterDTO, AuthTokenDTO } from "../dtos/auth.dto";
+import { UserDTO } from "../dtos/user.dto";
+import { IAuthenticationProvider } from "../interfaces/authentication/authentication.provider";
+import { IUserRepository } from "../interfaces/persistence/user.repository";
 
-export default class AuthServices {
-  constructor(authRepository: AuthRepository, userRepository: UserRepository) {
 
+export default class AuthService {
+  private authProvider: IAuthenticationProvider;
+  private userRepository: IUserRepository;
+  constructor(
+    authProvider: IAuthenticationProvider,
+    usersitory: IUserRepository
+  ) {
+    this.authProvider = authProvider;
+    this.userRepository = usersitory;
   }
 
-  async register(payload: AuthBase): Promise<AuthLoginSuccess> {
-    const prevAuth = await this.authRepository.getByEmail(payload.email);
-    const prevUser = await this.userRepository.getByUsername(payload.username);
-    if (prevAuth) throw new Error("Email already exists");
-    if (prevUser) throw new Error("Username already exists");
-    const id = crypto.randomUUID();
-    const [auth, user] =
-      await this.authRepository.executeTransaction([
-        this.authRepository.create({
-          ...payload,
-          role: EnumRole.USER,
-          password: await hashPassword(payload.password),
-          id,
-        }),
-        this.userRepository.create({
-          id: id,
-          username: payload.username,
-        }),
-      ]);
-
-    const token = encodeToken({
-      id: id,
-      email: payload.email,
-      role: EnumRole.USER,
+  async register(
+    currUser: null,
+    payload: AuthRegisterDTO,
+    params: null
+  ): Promise<UserDTO> {
+    const userDetail = await this.authProvider.register(payload);
+    const user = await this.userRepository.create({
+      email: userDetail.email,
+      username: payload.username,
+      fullName: payload.fullName,
     });
-    return { token };
+    return user as UserDTO;
   }
 
-  async login(payload: AuthLogin): Promise<AuthLoginSuccess> {
-    const user = await this.authRepository.getByEmail(payload.email);
-    if (!user) throw new Error("User not found");
-    const isPasswordValid = await comparePassword(
-      payload.password,
-      user.password
-    );
-    if (!isPasswordValid) throw new Error("Invalid password");
-    const token = encodeToken({
-      id: user.id,
-      email: user.email,
-      role: user.role,
-    });
-    return { token };
+  async login(currUser: null, payload: AuthLoginDTO, param: null): Promise<AuthTokenDTO> {
+    return await this.authProvider.signin(payload);
   }
 }
