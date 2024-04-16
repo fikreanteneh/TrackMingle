@@ -15,4 +15,3 @@ export interface FriendRequestDTO extends BaseDTO, FriendRequestBaseDTO{
 export interface FriendRequestDetailDTO extends FriendRequestDTO {
   Sender: UserDTO;
 }
-
