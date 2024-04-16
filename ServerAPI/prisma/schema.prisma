@@ -11,7 +11,7 @@ datasource db {
 
 
 model User {
-  id               String          @id @default(uuid())
+  id               String          @id @default(uuid()) @db.Uuid
   username         String          @unique
   fullName         String?
   email            String          @unique
@@ -29,18 +29,19 @@ model User {
 }
 
 model Friend {
-  id        String   @id @default(uuid())
-  userId    String
-  friendId  String
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid
+  friendId  String   @db.Uuid
   createdAt DateTime @default(now())
   User      User     @relation("Users", fields: [userId], references: [id])
   Friend    User     @relation("FriendUsers", fields: [friendId], references: [id])
 }
 
+
 model FriendRequest {
-  id         String   @id @default(uuid())
-  senderId   String
-  receiverId String
+  id         String   @id @default(uuid()) @db.Uuid
+  senderId   String   @db.Uuid
+  receiverId String   @db.Uuid
   createdAt  DateTime @default(now())
   Sender     User     @relation("FriendRequestsSent", fields: [senderId], references: [id])
   Receiver   User     @relation("FriendRequestsReceived", fields: [receiverId], references: [id])

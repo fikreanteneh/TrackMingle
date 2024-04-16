@@ -22,6 +22,7 @@ export default class AuthService {
   ): Promise<UserDTO> {
     const userDetail = await this.authProvider.register(payload);
     const user = await this.userRepository.create({
+      id: userDetail.id,
       email: userDetail.email,
       username: payload.username,
       fullName: payload.fullName,
