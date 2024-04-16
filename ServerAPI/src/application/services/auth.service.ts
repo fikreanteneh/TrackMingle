@@ -32,4 +32,5 @@ export default class AuthService {
   async login(currUser: null, payload: AuthLoginDTO, param: null): Promise<AuthTokenDTO> {
     return await this.authProvider.signin(payload);
   }
+  //TODO: Implement Change Phone Number and Email and Password
 }

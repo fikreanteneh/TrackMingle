@@ -1,13 +1,9 @@
 import { BaseDTO } from "./base.dto";
 import { UserDTO } from "./user.dto";
 
-
-export interface FriendBaseDTO {
+export interface FriendDTO extends BaseDTO{
   userId: string;
   friendId: string;
-}
-
-export interface FriendDTO extends BaseDTO, FriendBaseDTO{
   createdAt: Date;
 }
 

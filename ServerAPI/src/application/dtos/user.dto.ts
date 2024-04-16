@@ -1,12 +1,8 @@
 import { BaseDTO } from "./base.dto";
 import { FriendRequestDTO } from "./friend.request.dto";
 
-
-export interface UserBaseDTO {
+export interface UserDTO extends BaseDTO {
   username: string;
-}
-
-export interface UserDTO extends BaseDTO, UserBaseDTO {
   fullName?: string;
   profilePicture?: string;
   twitter?: string;
@@ -16,7 +12,6 @@ export interface UserDTO extends BaseDTO, UserBaseDTO {
   email?: string;
   phoneNumber?: string;
   createdAt: Date;
-
 }
 
 export interface UserPersonalDTO extends UserDTO {
