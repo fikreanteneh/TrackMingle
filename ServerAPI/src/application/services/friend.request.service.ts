@@ -16,11 +16,11 @@ export class FriendRequestService {
   public async getFriendRequests(
     currUser: AuthDetailDTO,
     payload: null,
-    params: FriendRequestGetParam
+    params: PageParam
   ): Promise<any> {
     //TODO: Implement Filtering Response Data
     const data = await this.friendRequestRepository.getByReceiverID(
-      params.id,
+      currUser.id,
       params.pageSize,
       params.pageNumber
     );
@@ -30,11 +30,11 @@ export class FriendRequestService {
   public async getSentFriendRequests(
     currUser: AuthDetailDTO,
     payload: null,
-    params: FriendRequestGetParam
+    params: PageParam
   ): Promise<any> {
     //TODO: Implement Filtering Response Data
     return await this.friendRequestRepository.getBySenderID(
-      params.id,
+      currUser.id,
       params.pageSize,
       params.pageNumber
     );
