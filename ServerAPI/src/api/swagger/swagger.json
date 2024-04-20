@@ -206,7 +206,11 @@
 				"tags": [
 					"Friend Request"
 				],
-				"security": [],
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -235,7 +239,11 @@
 				"tags": [
 					"Friend Request"
 				],
-				"security": [],
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -246,6 +254,58 @@
 						}
 					}
 				]
+			}
+		},
+		"/friendRequest/sent": {
+			"get": {
+				"operationId": "GetSentFriendRequests",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseSuccessType_any_"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Friend Request"
+				],
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/friendRequest/received": {
+			"get": {
+				"operationId": "GetFriendRequests",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseSuccessType_any_"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Friend Request"
+				],
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"parameters": []
 			}
 		},
 		"/auth/register": {

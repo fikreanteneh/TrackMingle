@@ -23,7 +23,8 @@ export class AuthController {
       new AuthenticationProvider(supabase()),
       new UserRepository(prisma())
     );
-    return responseHandler(service.register(null, requestBody, null));
+    const response = await service.register(null, requestBody, null);
+    return responseHandler<UserDTO>(response);
   }
 
   @Post("login")
@@ -35,6 +36,7 @@ export class AuthController {
       new AuthenticationProvider(supabase()),
       new UserRepository(prisma())
     );
-    return responseHandler(service.login(null, requestBody, null));
+    const response = await service.login(null, requestBody, null);
+    return responseHandler<AuthTokenDTO>(response);
   }
 }

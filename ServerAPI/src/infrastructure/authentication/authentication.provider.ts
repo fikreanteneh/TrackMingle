@@ -6,7 +6,7 @@ import {
   AuthTokenDTO,
 } from "../../application/dtos/auth.dto";
 import { IAuthenticationProvider } from "../../application/interfaces/authentication/authentication.provider";
-
+//TOD0: iMPLEMENT Error Handling 
 export default class AuthenticationProvider implements IAuthenticationProvider {
   private readonly supabase: SupabaseClient;
 
@@ -26,6 +26,7 @@ export default class AuthenticationProvider implements IAuthenticationProvider {
     const { data, error } = await this.supabase.auth.admin.createUser({
       email: payload.email,
       password: payload.password,
+      email_confirm: true //TODO For Production, this should be false and Verification link will be sent
       // role: "User",
     });
     if (error) throw error;

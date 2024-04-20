@@ -12,14 +12,16 @@ const expressAuthentication = async (
   scopes?: string[]
 ): Promise<AuthDetailDTO> => {
   if (!scopes) throw new UnknownError();
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     const bearer = (request.headers.Authorization ||
       request.headers.authorization ||
       "") as string;
     if (!bearer) reject(new AuthenticationError());
     const token = bearer.split(" ")[1].trim();
-    const authenticatedUser = new AuthenticationProvider(supabase()).verify({ token });
-    resolve(authenticatedUser);
+    const authDetail = await ((new AuthenticationProvider(supabase())).verify({ token }));
+    console.log("authDetail ======= ", authDetail);
+    if (!authDetail) reject(new AuthenticationError());
+    resolve(authDetail);
   });
 };
 

@@ -16,7 +16,7 @@
 //   }
 // };
 
-export const responseHandler = (data: any) => {
+export const responseHandler = <T>(data: T) => {
   return {
     success: true,
     error: null,
