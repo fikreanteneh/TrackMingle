@@ -1,0 +1,2 @@
+# Config
+This is used to store all of the configuration for the application. This includes things like the database connection string, the port that the server should run on, and any other configuration that the application needs to run.
