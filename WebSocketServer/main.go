@@ -6,6 +6,7 @@ import (
 	"WebSocketServer/config"
 	"WebSocketServer/infrustructure/auth_service"
 	"WebSocketServer/infrustructure/caching_service"
+	"WebSocketServer/infrustructure/api_service"
 	"encoding/json"
 	"log"
 	"net/http"
@@ -22,8 +23,10 @@ var environment, err = config.Load()
 
 var cachingService = caching_service.GetCachingService(environment)
 var authService = auth_service.GetAuthService(environment)
+var friendService = api_service.NewFriendService(environment.ApiBaseURL)
 
-var trackFeature = features.NewTrackFeature(cachingService)
+
+var trackFeature = features.NewTrackFeature(cachingService, friendService)
 
 
 func handleConnections(w *http.ResponseWriter, r *http.Request) {

@@ -11,7 +11,6 @@ import (
 type TrackFeature struct {
 	CachingService caching_service.CachingServiceInterface
 	FriendAPIService api_service.FriendAPIServiceInterface
-	message  chan <- *dtos.LocationHistory
 }
 
 
@@ -39,8 +38,9 @@ func (feature *TrackFeature) GetLocationUpdate(currUser *dtos.AuthDetailDTO, pay
 
 
 
-func NewTrackFeature( cachingService caching_service.CachingServiceInterface) *TrackFeature {
+func NewTrackFeature( cachingService caching_service.CachingServiceInterface, friendAPIService api_service.FriendAPIServiceInterface) *TrackFeature {
 	return &TrackFeature{
 		CachingService: cachingService,
+		FriendAPIService: friendAPIService,
 	}
 }
