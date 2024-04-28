@@ -17,7 +17,6 @@ export class FriendRequestController {
       new FriendRequestRepository(prisma()),
       new FriendRepository(prisma())
     );
-    console.log("============",request.user);
     const response = await service.createFriendRequest(request.user as AuthDetailDTO, null, {
       id: id,
     });

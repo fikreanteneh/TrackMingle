@@ -3,7 +3,7 @@ package dtos
 import "time"
 
 type LocationHistory struct {
-	ID        string  `json:"id"`
+	UserID        string  `json:"id"`
 	Latitude  float64 `json:"latitude"`
 	Longitude float64 `json:"longitude"`
 	CreatedAt time.Time `json:"createdAt"`
