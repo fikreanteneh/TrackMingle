@@ -31,7 +31,7 @@ func main() {
 
     var connectionHandler = api.NewConnectionHandler(&upgrader, authFeature, trackFeatureInstantiate)
 
-    http.HandleFunc("/location", connectionHandler.HandleHandshake)
+    http.HandleFunc("/location", connectionHandler.EstablishConnection)
     err := http.ListenAndServe(":"+environment.Port, nil)
     if err != nil {
         panic(err)

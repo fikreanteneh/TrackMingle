@@ -25,6 +25,8 @@ func (service *AuthService) VerifyUser(token string) (*dtos.AuthDetailDTO, error
 	authDetail := &dtos.AuthDetailDTO{
 		ID: claims["sub"].(string),
 		Role: claims["role"].(string),
+		//TODO: Add username to the claims
+		// Username: claims["username"].(string),
 		Token: token,
 	}
 	return authDetail, nil

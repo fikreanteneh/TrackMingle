@@ -14,7 +14,7 @@ type TrackFeature struct {
 }
 
 func (feature *TrackFeature) UpdateMyLocation(currUser *dtos.AuthDetailDTO,payload dtos.LocationDTO) (string, error) {
-	feature.cachingService.UpdateLocation(dtos.LocationHistory{
+	feature.cachingService.UpdateLocation(dtos.LocationHistoryDTO{
 		UserID:        currUser.ID,
 		Latitude:  payload.Latitude,
 		Longitude: payload.Longitude,
@@ -23,8 +23,8 @@ func (feature *TrackFeature) UpdateMyLocation(currUser *dtos.AuthDetailDTO,paylo
 	return "Succssfully updated new location", nil
 }
 
-func (feature *TrackFeature) GetLocationUpdate(currUser *dtos.AuthDetailDTO, payload any)  (<-chan *dtos.LocationHistory, error) {
-	messageChannel := make(chan *dtos.LocationHistory)
+func (feature *TrackFeature) GetLocationUpdate(currUser *dtos.AuthDetailDTO, payload any)  (<-chan *dtos.LocationHistoryDTO, error) {
+	messageChannel := make(chan *dtos.LocationHistoryDTO)
 	friendIds, err := feature.friendAPIService.GetAllFriends(currUser.ID)
 	if nil != err{
 		return nil, err

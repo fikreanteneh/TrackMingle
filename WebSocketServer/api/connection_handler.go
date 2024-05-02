@@ -16,23 +16,26 @@ type ConnectionHandler struct {
 	trackFeatureInstantiate func () *features.TrackFeature
 }
 
-func (c *ConnectionHandler) HandleHandshake(w http.ResponseWriter, r *http.Request) {
+func (c *ConnectionHandler) EstablishConnection(w http.ResponseWriter, r *http.Request) {
 	token := r.Header.Get("Authorization")
 	currUser, err := c.authFeature.AuthenticateUser(nil, token)
 	if err != nil {
-		log.Println("====== ",err)
+		log.Println("======> ",err)
 		w.Write(utils.NewHttpResponseDTO(false, "Unauthorized Access", "Invalid Token"))
 		return
 	}
 	ws, err := c.upgrader.Upgrade(w, r, nil)
 	if err != nil {
-		log.Println("===== ",err)
+		log.Println("F======> ",err)
 		w.Write(utils.NewHttpResponseDTO(false, "Internal Server Error", "Failed to upgrade to Web Connection"))
 		return
 	}
+	defer ws.Close()
 	trackFeature := c.trackFeatureInstantiate()
+	// This Listen to Friend location Updates will continue in a new goroutine
 	go handlers.ListenToUpdatesHandler(ws, currUser, trackFeature)
-	go handlers.ListenToClientHandler(ws, currUser, trackFeature)
+	//This Listen to Client will continue in this goroutine 
+	handlers.ListenToClientHandler(ws, currUser, trackFeature)
 }
 
 func NewConnectionHandler(

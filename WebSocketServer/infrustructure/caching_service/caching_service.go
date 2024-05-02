@@ -15,12 +15,14 @@ type CachingService struct {
 	context     context.Context
 }
 
-func (service *CachingService) GetLocationUpdate(friendIds *[]string, messageChannel chan<- *dtos.LocationHistory) {
+func (service *CachingService) GetLocationUpdate(friendIds *[]string, messageChannel chan<- *dtos.LocationHistoryDTO) {
 	subscription := service.redisClient.Subscribe(service.context, *friendIds...)
 	defer subscription.Close()
+	defer close(messageChannel)
+	//TODO: Handle which errors should stop the loop
 	for message := range subscription.Channel() {
 		payload := message.Payload
-        var locationHistory dtos.LocationHistory
+        var locationHistory dtos.LocationHistoryDTO
         if err := json.Unmarshal([]byte(payload), &locationHistory); err != nil {
             continue
         }
@@ -28,7 +30,7 @@ func (service *CachingService) GetLocationUpdate(friendIds *[]string, messageCha
 	}
 }
 
-func (service *CachingService) UpdateLocation(location dtos.LocationHistory) {
+func (service *CachingService) UpdateLocation(location dtos.LocationHistoryDTO) {
 	jsonData , _ := json.Marshal(location)
 	update := service.redisClient.Publish(
 		service.context,
@@ -36,11 +38,8 @@ func (service *CachingService) UpdateLocation(location dtos.LocationHistory) {
 		jsonData,
 	)
 	if update.Err() != nil {
-		log.Println("=========Error updating location: ", update.Err().Error())
-		return
+		log.Println("=====> ", update.Err().Error())
 	}
-	log.Println("=========Location updated successfully ", update.Val() )
-
 }
 
 func NewCachingService(client *redis.Client) caching_service.CachingServiceInterface {

@@ -10,14 +10,16 @@ import (
 
 func ListenToClientHandler(ws *websocket.Conn, currUser *dtos.AuthDetailDTO, trackFeature *features.TrackFeature) {
 	for {
-		if ws == nil {
-			var location dtos.LocationDTO
-			err := ws.ReadJSON(&location)
-			if err != nil {
-				log.Println("===== ",err)
+		var location dtos.LocationDTO
+		err := ws.ReadJSON(&location)
+		
+		if err != nil {
+			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
+				log.Println("=====>", err)
 				return
 			}
-			trackFeature.UpdateMyLocation(currUser, location)
+			log.Println("=====> ",err)
 		}
+		trackFeature.UpdateMyLocation(currUser, location)
 	}
 }
