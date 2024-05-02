@@ -37,7 +37,7 @@ export default class FriendRequestRepository
   ): Promise<FriendRequestModel> {
     const records = await this.model.findMany({
       where: {
-        recieverId: id,
+        receiverId: id,
       },
       skip: pageNumber * pageSize,
       take: pageSize,

@@ -18,7 +18,10 @@ export default class GenericRepository<T extends BaseModel> implements IGenericR
     return record;
   }
   public getByID(id: string): Promise<T | null> {
-    throw new Error("Method not implemented.");
+    const record = this.model.findUnique({
+      where: { id: id },
+    })
+    return record;
   }
 
   public async create(payload: T): Promise<T> {

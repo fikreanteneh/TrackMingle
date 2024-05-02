@@ -10,3 +10,13 @@ export interface FriendDTO extends BaseDTO{
 export interface FriendDetailDTO extends FriendDTO {
   Friend : UserDTO 
 }
+
+export interface FriendListDTO {
+  friends: FriendDetailDTO[];
+}
+
+
+
+export interface FriendMinimalDTO {
+  friends: string[];
+}

@@ -4,20 +4,17 @@ import (
 	"WebSocketServer/application/dtos"
 	"WebSocketServer/application/interfaces/api_service"
 	"WebSocketServer/application/interfaces/caching_service"
+	"WebSocketServer/config"
 	"time"
 )
-
-
 type TrackFeature struct {
-	CachingService caching_service.CachingServiceInterface
-	FriendAPIService api_service.FriendAPIServiceInterface
+	environment    *config.Environment
+	cachingService caching_service.CachingServiceInterface
+	friendAPIService api_service.FriendAPIServiceInterface
 }
 
-
-
-
 func (feature *TrackFeature) UpdateMyLocation(currUser *dtos.AuthDetailDTO,payload dtos.LocationDTO) (string, error) {
-	feature.CachingService.UpdateLocation(dtos.LocationHistory{
+	feature.cachingService.UpdateLocation(dtos.LocationHistory{
 		UserID:        currUser.ID,
 		Latitude:  payload.Latitude,
 		Longitude: payload.Longitude,
@@ -28,19 +25,20 @@ func (feature *TrackFeature) UpdateMyLocation(currUser *dtos.AuthDetailDTO,paylo
 
 func (feature *TrackFeature) GetLocationUpdate(currUser *dtos.AuthDetailDTO, payload any)  (<-chan *dtos.LocationHistory, error) {
 	messageChannel := make(chan *dtos.LocationHistory)
-	friends, err := feature.FriendAPIService.GetAllFriends(currUser.ID)
+	friendIds, err := feature.friendAPIService.GetAllFriends(currUser.ID)
 	if nil != err{
 		return nil, err
 	}
-	feature.CachingService.GetLocationUpdate(&friends.Friends, messageChannel)
+	go feature.cachingService.GetLocationUpdate(&friendIds.Friends, messageChannel)
 	return messageChannel, nil
 }
 
 
 
-func NewTrackFeature( cachingService caching_service.CachingServiceInterface, friendAPIService api_service.FriendAPIServiceInterface) *TrackFeature {
+func NewTrackFeature(environment *config.Environment ,cachingService caching_service.CachingServiceInterface, friendAPIService api_service.FriendAPIServiceInterface) *TrackFeature {
 	return &TrackFeature{
-		CachingService: cachingService,
-		FriendAPIService: friendAPIService,
+		environment: environment,
+		cachingService: cachingService,
+		friendAPIService: friendAPIService,
 	}
 }

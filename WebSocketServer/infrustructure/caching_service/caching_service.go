@@ -5,6 +5,8 @@ import (
 	"WebSocketServer/application/interfaces/caching_service"
 	"context"
 	"encoding/json"
+	"log"
+
 	"github.com/redis/go-redis/v9"
 )
 
@@ -27,11 +29,18 @@ func (service *CachingService) GetLocationUpdate(friendIds *[]string, messageCha
 }
 
 func (service *CachingService) UpdateLocation(location dtos.LocationHistory) {
-		service.redisClient.Publish(
+	jsonData , _ := json.Marshal(location)
+	update := service.redisClient.Publish(
 		service.context,
 		location.UserID,
-		location,
+		jsonData,
 	)
+	if update.Err() != nil {
+		log.Println("=========Error updating location: ", update.Err().Error())
+		return
+	}
+	log.Println("=========Location updated successfully ", update.Val() )
+
 }
 
 func NewCachingService(client *redis.Client) caching_service.CachingServiceInterface {

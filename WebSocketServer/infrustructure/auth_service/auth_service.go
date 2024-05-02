@@ -11,7 +11,7 @@ type AuthService struct {
 	secret        string
 }
 
-func (service *AuthService) GetUser(token string) (*dtos.AuthDetailDTO, error) {
+func (service *AuthService) VerifyUser(token string) (*dtos.AuthDetailDTO, error) {
 	claims := jwt.MapClaims{}
 	tkn, err := jwt.ParseWithClaims(token, claims, func(token *jwt.Token)(interface{}, error){
 		return []byte(service.secret), nil
@@ -27,7 +27,6 @@ func (service *AuthService) GetUser(token string) (*dtos.AuthDetailDTO, error) {
 		Role: claims["role"].(string),
 		Token: token,
 	}
-
 	return authDetail, nil
 
 }

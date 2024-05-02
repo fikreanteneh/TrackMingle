@@ -5,6 +5,8 @@ import { TsoaRoute, fetchMiddlewares, ExpressTemplateService } from '@tsoa/runti
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { FriendRequestController } from './../controllers/friend.request.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { FriendController } from './../controllers/friend.controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { AuthController } from './../controllers/auth.controller';
 import { expressAuthentication } from './../middlewares/authentication.middleware';
 // @ts-ignore - no great way to install types from subpackage
@@ -22,6 +24,24 @@ const models: TsoaRoute.Models = {
             "success": {"dataType":"boolean","required":true},
             "error": {"dataType":"enum","enums":[null],"required":true},
             "response": {"dataType":"any","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "FriendMinimalDTO": {
+        "dataType": "refObject",
+        "properties": {
+            "friends": {"dataType":"array","array":{"dataType":"string"},"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ResponseSuccessType_FriendMinimalDTO_": {
+        "dataType": "refObject",
+        "properties": {
+            "success": {"dataType":"boolean","required":true},
+            "error": {"dataType":"enum","enums":[null],"required":true},
+            "response": {"ref":"FriendMinimalDTO","required":true},
         },
         "additionalProperties": false,
     },
@@ -109,6 +129,7 @@ export function RegisterRoutes(app: Router) {
 
             function FriendRequestController_createFriendRequest(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
                     id: {"in":"path","name":"id","required":true,"dataType":"string"},
             };
 
@@ -140,6 +161,7 @@ export function RegisterRoutes(app: Router) {
 
             function FriendRequestController_acceptFriendRequest(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
                     id: {"in":"path","name":"id","required":true,"dataType":"string"},
             };
 
@@ -171,6 +193,7 @@ export function RegisterRoutes(app: Router) {
 
             function FriendRequestController_getSentFriendRequests(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -201,6 +224,7 @@ export function RegisterRoutes(app: Router) {
 
             function FriendRequestController_getFriendRequests(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -218,6 +242,37 @@ export function RegisterRoutes(app: Router) {
                 next,
                 validatedArgs,
                 successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/:id/friends',
+            ...(fetchMiddlewares<RequestHandler>(FriendController)),
+            ...(fetchMiddlewares<RequestHandler>(FriendController.prototype.register)),
+
+            function FriendController_register(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    id: {"in":"path","name":"id","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new FriendController();
+
+              templateService.apiHandler({
+                methodName: 'register',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: 200,
               });
             } catch (err) {
                 return next(err);

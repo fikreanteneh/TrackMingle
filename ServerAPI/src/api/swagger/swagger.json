@@ -29,6 +29,45 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"FriendMinimalDTO": {
+				"properties": {
+					"friends": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"friends"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResponseSuccessType_FriendMinimalDTO_": {
+				"properties": {
+					"success": {
+						"type": "boolean"
+					},
+					"error": {
+						"type": "number",
+						"enum": [
+							null
+						],
+						"nullable": true
+					},
+					"response": {
+						"$ref": "#/components/schemas/FriendMinimalDTO"
+					}
+				},
+				"required": [
+					"success",
+					"error",
+					"response"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"UserDTO": {
 				"properties": {
 					"id": {
@@ -306,6 +345,37 @@
 					}
 				],
 				"parameters": []
+			}
+		},
+		"/{id}/friends": {
+			"get": {
+				"operationId": "Register",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseSuccessType_FriendMinimalDTO_"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Friends"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/auth/register": {
