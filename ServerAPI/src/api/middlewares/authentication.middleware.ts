@@ -19,7 +19,6 @@ const expressAuthentication = async (
     if (!bearer) reject(new AuthenticationError());
     const token = bearer.split(" ")[1].trim();
     const authDetail = await ((new AuthenticationProvider(supabase())).verify({ token }));
-    console.log("authDetail ======= ", authDetail);
     if (!authDetail) reject(new AuthenticationError());
     resolve(authDetail);
   });

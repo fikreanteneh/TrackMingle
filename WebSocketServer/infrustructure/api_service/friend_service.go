@@ -4,6 +4,7 @@ import (
 	"WebSocketServer/application/dtos"
 	"WebSocketServer/application/interfaces/api_service"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 )
@@ -13,16 +14,20 @@ type FriendService struct {
 }
 
 func (service *FriendService) GetAllFriends(id string) (*dtos.FriendDTO, error) {
-	resp, err := http.Get(service.BaseURL + "/friends/" + id)
+	url := service.BaseURL + id + "/friends"
+	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
 	}
-	friends := &dtos.FriendDTO{}
+	friends := &dtos.SuccessFulResponse[dtos.FriendDTO]{}
 	err = json.NewDecoder(resp.Body).Decode(friends)
 	if err != nil {
     	return nil, fmt.Errorf("error decoding response body: %w", err)
 	}
-	return friends, nil
+	if !friends.Success {
+		return nil, errors.New("error fetching friends")
+	}
+	return friends.Response, nil
 
 }
 

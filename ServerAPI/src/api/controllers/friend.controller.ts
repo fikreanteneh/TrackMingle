@@ -19,7 +19,7 @@ export class FriendController {
     @Request() request: ERequest,
     @Path("id") id: string
   ): Promise<ResponseSuccessType<FriendMinimalDTO>> {
-    const service = new FriendService(new FriendRepository(prisma));
+    const service = new FriendService(new FriendRepository(prisma()));
     const response = await service.getAllMyFriendsMinimal(
       request.user as AuthDetailDTO,
       { id: id }

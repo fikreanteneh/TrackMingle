@@ -23,14 +23,17 @@ func (feature *TrackFeature) UpdateMyLocation(currUser *dtos.AuthDetailDTO,paylo
 	return "Succssfully updated new location", nil
 }
 
-func (feature *TrackFeature) GetLocationUpdate(currUser *dtos.AuthDetailDTO, payload any)  (<-chan *dtos.LocationHistoryDTO, error) {
-	messageChannel := make(chan *dtos.LocationHistoryDTO)
+func (feature *TrackFeature) GetLocationUpdate(currUser *dtos.AuthDetailDTO, payload func([]byte) error)  (any, error) {
 	friendIds, err := feature.friendAPIService.GetAllFriends(currUser.ID)
-	if nil != err{
-		return nil, err
+	count := 0
+	for err != nil {
+		count++
+		friendIds, err = feature.friendAPIService.GetAllFriends(currUser.ID)
+		if count == 5 {
+			return nil, err
+		}
 	}
-	go feature.cachingService.GetLocationUpdate(&friendIds.Friends, messageChannel)
-	return messageChannel, nil
+	return feature.cachingService.GetLocationUpdate(&friendIds.Friends, payload)
 }
 
 

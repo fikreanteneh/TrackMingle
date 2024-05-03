@@ -8,6 +8,6 @@ export const prisma = () => {
   if (prismaClient) return prismaClient;
   const pool = new Pool({ connectionString: `${process.env.DATABASE_URL}` });
   const adapter = new PrismaPg(pool);
-  prismaClient = new PrismaClient({ adapter });
+  prismaClient = new PrismaClient();
   return prismaClient;
 };
