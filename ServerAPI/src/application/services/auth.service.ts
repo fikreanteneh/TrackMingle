@@ -1,8 +1,7 @@
-import { AuthDetailDTO, AuthLoginDTO, AuthRegisterDTO, AuthTokenDTO } from "../dtos/auth.dto";
+import { AuthDTO, AuthTokenDTO } from "../dtos/auth.dto";
 import { UserDTO } from "../dtos/user.dto";
 import { IAuthenticationProvider } from "../interfaces/authentication/authentication.provider";
 import { IUserRepository } from "../interfaces/persistence/user.repository";
-
 
 export default class AuthService {
   private authProvider: IAuthenticationProvider;
@@ -17,21 +16,18 @@ export default class AuthService {
 
   async register(
     currUser: null,
-    payload: AuthRegisterDTO,
+    payload: AuthDTO,
     params: null
-  ): Promise<UserDTO> {
-    const userDetail = await this.authProvider.register(payload);
-    const user = await this.userRepository.create({
-      id: userDetail.id,
-      email: userDetail.email,
-      username: payload.username,
-      fullName: payload.fullName,
-    });
-    return user as UserDTO;
+  ): Promise<AuthTokenDTO> {
+    return await this.authProvider.register(payload);
   }
 
-  async login(currUser: null, payload: AuthLoginDTO, param: null): Promise<AuthTokenDTO> {
-    return await this.authProvider.signin(payload);
+  async login(
+    currUser: null,
+    payload: AuthDTO,
+    param: null
+  ): Promise<AuthTokenDTO> {
+    return await this.authProvider.signIn(payload);
   }
   //TODO: Implement Change Phone Number and Email and Password
 }

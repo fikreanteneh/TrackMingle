@@ -7,6 +7,196 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"FriendRequestDTO": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"senderId": {
+						"type": "string"
+					},
+					"receiverId": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"senderId",
+					"receiverId",
+					"createdAt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UserDTO": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"username": {
+						"type": "string"
+					},
+					"fullName": {
+						"type": "string"
+					},
+					"profilePicture": {
+						"type": "string"
+					},
+					"twitter": {
+						"type": "string"
+					},
+					"linkedin": {
+						"type": "string"
+					},
+					"facebook": {
+						"type": "string"
+					},
+					"instagram": {
+						"type": "string"
+					},
+					"phoneNumber": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"username",
+					"createdAt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UserPersonalDTO": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"username": {
+						"type": "string"
+					},
+					"fullName": {
+						"type": "string"
+					},
+					"profilePicture": {
+						"type": "string"
+					},
+					"twitter": {
+						"type": "string"
+					},
+					"linkedin": {
+						"type": "string"
+					},
+					"facebook": {
+						"type": "string"
+					},
+					"instagram": {
+						"type": "string"
+					},
+					"phoneNumber": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"SentRequests": {
+						"items": {
+							"$ref": "#/components/schemas/FriendRequestDTO"
+						},
+						"type": "array"
+					},
+					"ReceivedRequests": {
+						"items": {
+							"$ref": "#/components/schemas/FriendRequestDTO"
+						},
+						"type": "array"
+					},
+					"Friends": {
+						"items": {
+							"$ref": "#/components/schemas/UserDTO"
+						},
+						"type": "array"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"username",
+					"createdAt",
+					"updatedAt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UserCreateDTO": {
+				"properties": {
+					"username": {
+						"type": "string"
+					},
+					"fullName": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"username",
+					"fullName"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UpdateLinksDTO": {
+				"properties": {
+					"twitter": {
+						"type": "string"
+					},
+					"linkedin": {
+						"type": "string"
+					},
+					"facebook": {
+						"type": "string"
+					},
+					"instagram": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UpdateUsernameDTO": {
+				"properties": {
+					"username": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"username"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UpdateFullNameDTO": {
+				"properties": {
+					"fullName": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"fullName"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"ResponseSuccessType_any_": {
 				"properties": {
 					"success": {
@@ -68,99 +258,6 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"UserDTO": {
-				"properties": {
-					"id": {
-						"type": "string"
-					},
-					"username": {
-						"type": "string"
-					},
-					"fullName": {
-						"type": "string"
-					},
-					"profilePicture": {
-						"type": "string"
-					},
-					"twitter": {
-						"type": "string"
-					},
-					"linkedin": {
-						"type": "string"
-					},
-					"facebook": {
-						"type": "string"
-					},
-					"instagram": {
-						"type": "string"
-					},
-					"email": {
-						"type": "string"
-					},
-					"phoneNumber": {
-						"type": "string"
-					},
-					"createdAt": {
-						"type": "string",
-						"format": "date-time"
-					}
-				},
-				"required": [
-					"id",
-					"username",
-					"createdAt"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"ResponseSuccessType_UserDTO_": {
-				"properties": {
-					"success": {
-						"type": "boolean"
-					},
-					"error": {
-						"type": "number",
-						"enum": [
-							null
-						],
-						"nullable": true
-					},
-					"response": {
-						"$ref": "#/components/schemas/UserDTO"
-					}
-				},
-				"required": [
-					"success",
-					"error",
-					"response"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"AuthRegisterDTO": {
-				"properties": {
-					"email": {
-						"type": "string"
-					},
-					"password": {
-						"type": "string"
-					},
-					"username": {
-						"type": "string"
-					},
-					"fullName": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"email",
-					"password",
-					"username",
-					"fullName"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
 			"AuthTokenDTO": {
 				"properties": {
 					"token": {
@@ -197,7 +294,7 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"AuthLoginDTO": {
+			"AuthDTO": {
 				"properties": {
 					"email": {
 						"type": "string"
@@ -227,6 +324,174 @@
 		"contact": {}
 	},
 	"paths": {
+		"/profile": {
+			"get": {
+				"operationId": "GetProfile",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserPersonalDTO"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Profile"
+				],
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateProfile",
+				"responses": {
+					"201": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserDTO"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Profile"
+				],
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UserCreateDTO"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/profile/updateLinks": {
+			"put": {
+				"operationId": "UpdateLinks",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserDTO"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Profile"
+				],
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateLinksDTO"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/profile/updateUsername": {
+			"put": {
+				"operationId": "UpdateUsername",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserDTO"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Profile"
+				],
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateUsernameDTO"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/profile/updateFullName": {
+			"post": {
+				"operationId": "UpdateFullName",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserDTO"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Profile"
+				],
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateFullNameDTO"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/friendRequest/{id}": {
 			"post": {
 				"operationId": "CreateFriendRequest",
@@ -387,7 +652,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/ResponseSuccessType_UserDTO_"
+									"$ref": "#/components/schemas/ResponseSuccessType_AuthTokenDTO_"
 								}
 							}
 						}
@@ -403,7 +668,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/AuthRegisterDTO"
+								"$ref": "#/components/schemas/AuthDTO"
 							}
 						}
 					}
@@ -435,7 +700,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/AuthLoginDTO"
+								"$ref": "#/components/schemas/AuthDTO"
 							}
 						}
 					}

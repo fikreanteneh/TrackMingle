@@ -1,19 +1,19 @@
 import SupabaseClient from "@supabase/supabase-js/dist/module/SupabaseClient";
 import {
   AuthDetailDTO,
-  AuthLoginDTO,
-  AuthRegisterDTO,
+  AuthDTO,
   AuthTokenDTO,
+  UserMetadataCustom,
 } from "../../application/dtos/auth.dto";
 import { IAuthenticationProvider } from "../../application/interfaces/authentication/authentication.provider";
-//TOD0: iMPLEMENT Error Handling 
+//TODO: iMPLEMENT Error Handling
 export default class AuthenticationProvider implements IAuthenticationProvider {
   private readonly supabase: SupabaseClient;
 
   constructor(supabase: SupabaseClient) {
     this.supabase = supabase;
   }
-  async signin(payload: AuthLoginDTO): Promise<AuthTokenDTO> {
+  async signIn(payload: AuthDTO): Promise<AuthTokenDTO> {
     const { data, error } = await this.supabase.auth.signInWithPassword({
       email: payload.email,
       password: payload.password,
@@ -22,33 +22,40 @@ export default class AuthenticationProvider implements IAuthenticationProvider {
     return { token: data.session.access_token };
   }
 
-  async register(payload: AuthRegisterDTO): Promise<AuthDetailDTO> {
+  async register(payload: AuthDTO): Promise<AuthTokenDTO> {
     const { data, error } = await this.supabase.auth.admin.createUser({
       email: payload.email,
       password: payload.password,
-      email_confirm: true //TODO For Production, this should be false and Verification link will be sent
-      // role: "User",
+      email_confirm: true,
     });
     if (error) throw error;
-    return {
-      id: data.user.id,
-      email: data.user.email,
-      phone: data.user.phone,
-      role: data.user.role,
-      createdAt: data.user.created_at,
-      updatedAt: data.user.updated_at,
-    };
+    return this.signIn(payload);
   }
+
   async verify(payload: AuthTokenDTO): Promise<AuthDetailDTO> {
     const { data, error } = await this.supabase.auth.getUser(payload.token);
+    let x = data.user?.user_metadata
     if (error) throw new Error("Unauthorized");
     return {
       id: data.user.id,
-      email: data.user.email,
-      phone: data.user.phone,
-      role: data.user.role,
-      createdAt: data.user.created_at,
-      updatedAt: data.user.updated_at,
+      email: data.user.email as string,
+      role: data.user.role as string,
+      verified: data.user.email_confirmed_at ? true : false,
+      metadata: {
+        userId: data.user.user_metadata["userId"],
+        username: data.user.user_metadata["username"],
+        fullName: data.user.user_metadata["fullName"],
+        profilePicture: data.user.user_metadata["profilePicture"],
+      },
     };
   }
+
+  async updateMetadata(authId: string, payload: UserMetadataCustom): Promise<null> {
+    const { data, error } = await this.supabase.auth.admin.updateUserById(authId, {
+      user_metadata: payload,
+    });
+    if (error) throw error;
+    return null;
+  }
+
 }

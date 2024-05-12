@@ -1,12 +1,13 @@
 import {
   AuthDetailDTO,
-  AuthLoginDTO,
-  AuthRegisterDTO,
+  AuthDTO,
   AuthTokenDTO,
+  UserMetadataCustom,
 } from "../../dtos/auth.dto";
 
 export interface IAuthenticationProvider {
-  signin(payload: AuthLoginDTO): Promise<AuthTokenDTO>;
-  register(payload: AuthRegisterDTO): Promise<AuthDetailDTO>;
+  signIn(payload: AuthDTO): Promise<AuthTokenDTO>;
+  register(payload: AuthDTO): Promise<AuthTokenDTO>;
   verify(payload: AuthTokenDTO): Promise<AuthDetailDTO>;
+  updateMetadata(authId: string, payload: UserMetadataCustom): Promise<null>;
 }

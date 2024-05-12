@@ -13,8 +13,6 @@ export default class FriendRepository
     this.prisma = prisma;
   }
   public async getFriendsByIDMinimal(id: string): Promise<FriendModel[]> {
-    const x = this.prisma
-    const y = this.model
     const record = await this.model.findMany({
       where: {userId: id,},
       select: {friendId: true}
