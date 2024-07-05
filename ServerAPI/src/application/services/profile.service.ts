@@ -1,3 +1,4 @@
+import { singleton } from "tsyringe";
 import { AuthDetailDTO } from "../dtos/auth.dto";
 import {
   UpdateFullNameDTO,
@@ -5,13 +6,13 @@ import {
   UpdateUsernameDTO,
   UserCreateDTO,
   UserDTO,
-  UserPersonalDTO
+  UserPersonalDTO,
 } from "../dtos/user.dto";
 import { IAuthenticationProvider } from "../interfaces/authentication/authentication.provider";
 import { IUserRepository } from "../interfaces/persistence/user.repository";
 
-
 //TODO: Search Service
+@singleton()
 export default class ProfileService {
   private userRepository: IUserRepository;
   private authProvider: IAuthenticationProvider;

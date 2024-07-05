@@ -1,12 +1,16 @@
 import { PrismaClient } from "@prisma/client";
 import { IGenericRepository } from "../../application/interfaces/persistence/generic.repository";
 import { BaseModel } from "../../domain/models/base.model";
+import { container, inject, singleton } from "tsyringe";
 
-export default class GenericRepository<T extends BaseModel> implements IGenericRepository<T> {
+@singleton()
+export default class GenericRepository<T extends BaseModel>
+  implements IGenericRepository<T>
+{
   model: any;
   prisma: PrismaClient;
 
-  constructor(model: any, prisma: PrismaClient) {
+  constructor(model: any, @inject("PrismaClient") prisma: PrismaClient) {
     this.model = model;
     this.prisma = prisma;
   }
@@ -20,7 +24,7 @@ export default class GenericRepository<T extends BaseModel> implements IGenericR
   public getByID(id: string): Promise<T | null> {
     const record = this.model.findUnique({
       where: { id: id },
-    })
+    });
     return record;
   }
 

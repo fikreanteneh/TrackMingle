@@ -1,4 +1,5 @@
 import SupabaseClient from "@supabase/supabase-js/dist/module/SupabaseClient";
+import { container, inject, singleton } from "tsyringe";
 import {
   AuthDetailDTO,
   AuthDTO,
@@ -6,11 +7,13 @@ import {
   UserMetadataCustom,
 } from "../../application/dtos/auth.dto";
 import { IAuthenticationProvider } from "../../application/interfaces/authentication/authentication.provider";
+
 //TODO: iMPLEMENT Error Handling
+@singleton()
 export default class AuthenticationProvider implements IAuthenticationProvider {
   private readonly supabase: SupabaseClient;
 
-  constructor(supabase: SupabaseClient) {
+  constructor(@inject("SupabaseClient") supabase: SupabaseClient) {
     this.supabase = supabase;
   }
   async signIn(payload: AuthDTO): Promise<AuthTokenDTO> {
@@ -34,7 +37,7 @@ export default class AuthenticationProvider implements IAuthenticationProvider {
 
   async verify(payload: AuthTokenDTO): Promise<AuthDetailDTO> {
     const { data, error } = await this.supabase.auth.getUser(payload.token);
-    let x = data.user?.user_metadata
+    let x = data.user?.user_metadata;
     if (error) throw new Error("Unauthorized");
     return {
       id: data.user.id,
@@ -50,12 +53,17 @@ export default class AuthenticationProvider implements IAuthenticationProvider {
     };
   }
 
-  async updateMetadata(authId: string, payload: UserMetadataCustom): Promise<null> {
-    const { data, error } = await this.supabase.auth.admin.updateUserById(authId, {
-      user_metadata: payload,
-    });
+  async updateMetadata(
+    authId: string,
+    payload: UserMetadataCustom
+  ): Promise<null> {
+    const { data, error } = await this.supabase.auth.admin.updateUserById(
+      authId,
+      {
+        user_metadata: payload,
+      }
+    );
     if (error) throw error;
     return null;
   }
-
 }

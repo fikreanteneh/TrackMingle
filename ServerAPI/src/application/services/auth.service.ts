@@ -1,17 +1,19 @@
+import { inject, injectable, singleton } from "tsyringe";
 import { AuthDTO, AuthTokenDTO } from "../dtos/auth.dto";
-import { UserDTO } from "../dtos/user.dto";
 import { IAuthenticationProvider } from "../interfaces/authentication/authentication.provider";
 import { IUserRepository } from "../interfaces/persistence/user.repository";
 
+@singleton()
+@injectable()
 export default class AuthService {
   private authProvider: IAuthenticationProvider;
   private userRepository: IUserRepository;
   constructor(
-    authProvider: IAuthenticationProvider,
-    usersitory: IUserRepository
+    @inject("IAuthenticationProvider") authProvider: IAuthenticationProvider,
+    @inject("IUserRepository") userRepository: IUserRepository
   ) {
     this.authProvider = authProvider;
-    this.userRepository = usersitory;
+    this.userRepository = userRepository;
   }
 
   async register(

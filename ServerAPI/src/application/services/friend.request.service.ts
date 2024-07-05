@@ -1,9 +1,11 @@
+import { singleton } from "tsyringe";
 import { AuthDetailDTO } from "../dtos/auth.dto";
 import { FriendRequestGetParam } from "../dtos/friend.request.dto";
 import { IDParam, PageParam } from "../dtos/request.dto";
 import { IFriendRepository } from "../interfaces/persistence/friend.repository";
 import { IFriendRequestRepository } from "../interfaces/persistence/friend.request.repository";
 
+@singleton()
 export class FriendRequestService {
   private friendRequestRepository: IFriendRequestRepository;
   private FriendRepository: IFriendRepository;

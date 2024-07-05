@@ -2,14 +2,16 @@ import { PrismaClient } from "@prisma/client/extension";
 import { IFriendRequestRepository } from "../../application/interfaces/persistence/friend.request.repository";
 import { FriendRequestModel } from "../../domain/models/friend.request.model";
 import GenericRepository from "./generic.repository";
+import { container, inject, singleton } from "tsyringe";
 
+@singleton()
 export default class FriendRequestRepository
   extends GenericRepository<FriendRequestModel>
   implements IFriendRequestRepository
 {
   prisma: PrismaClient;
 
-  constructor(prisma: PrismaClient) {
+  constructor(@inject("PrismaClient") prisma: PrismaClient) {
     super(prisma.FriendRequest, prisma);
     this.prisma = prisma;
   }
@@ -18,8 +20,8 @@ export default class FriendRequestRepository
     pageSize: number = 100,
     pageNumber: number = 0
   ): Promise<FriendRequestModel> {
-       const x = this.prisma;
-       const y = this.model;
+    const x = this.prisma;
+    const y = this.model;
     const records = await this.model.findMany({
       where: {
         senderId: id,
