@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:near_by_friends/core/utils/bloc_observer.dart';
-import 'package:near_by_friends/features/auth/presentation/bloc/auth_bloc/auth_bloc.dart';
-import 'package:near_by_friends/injection_container.dart'
-    as injection_container;
-import 'package:near_by_friends/injection_container.dart';
-import 'package:near_by_friends/router.dart';
+import 'package:track_mingle/core/utils/bloc_observer.dart';
+import 'package:track_mingle/features/auth/presentation/bloc/auth_bloc/auth_bloc.dart';
+import 'package:track_mingle/features/routers/router.dart';
+import 'package:track_mingle/injection_container.dart' as injection_container;
+import 'package:track_mingle/injection_container.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,18 +20,16 @@ class TrackMingle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => serviceLocator.get<AuthBloc>(),
+        ),
+      ],
+      child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
-        home: MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (context) => serviceLocator.get<AuthBloc>(),
-            ),
-          ],
-          child: MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            routerConfig: router,
-          ),
-        ));
+        routerConfig: router,
+      ),
+    );
   }
 }

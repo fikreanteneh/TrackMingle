@@ -15,6 +15,7 @@
   },
   "routes": {
     "routesDir": "src/api/routes",
-    "authenticationModule": "src/api/middlewares/authentication.middleware.ts"
+    "authenticationModule": "src/api/middlewares/authentication.middleware.ts",
+    "iocModule": "src/api/iocModule"
   }
 }

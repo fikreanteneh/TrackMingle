@@ -1,6 +1,6 @@
 {
-    "name": "near_by_friends",
-    "short_name": "near_by_friends",
+    "name": "track_mingle",
+    "short_name": "track_mingle",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -1,4 +1,4 @@
-package com.example.near_by_friends
+package com.example.track_mingle
 
 import io.flutter.embedding.android.FlutterActivity
 

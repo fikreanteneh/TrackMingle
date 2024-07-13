@@ -1,9 +1,8 @@
 import 'package:flutter/widgets.dart';
-import 'package:near_by_friends/features/auth/presentation/widget/custome_textfield.dart';
+import 'package:track_mingle/features/auth/presentation/widget/custome_textfield.dart';
 
 class SignInSlide extends StatefulWidget {
-  final void Function(String) changeSlide;
-  const SignInSlide({super.key, required this.changeSlide});
+  const SignInSlide({super.key});
 
   @override
   _SignInSlideState createState() => _SignInSlideState();

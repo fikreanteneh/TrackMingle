@@ -1,0 +1,1 @@
+{"version":3,"file":"authentication.error.js","sourceRoot":"","sources":["../../../src/application/errors/authentication.error.ts"],"names":[],"mappings":"AAAA,OAAO,WAAW,MAAM,gBAAgB,CAAC;AAEzC,MAAM,CAAC,OAAO,OAAO,mBAAoB,SAAQ,WAAW;IAC1D;QACE,KAAK,CAAC,sBAAsB,EAAE,GAAG,CAAC,CAAC;QACnC,KAAK,CAAC,iBAAiB,CAAC,IAAI,EAAE,IAAI,CAAC,WAAW,CAAC,CAAC;IAClD,CAAC;CACF"}

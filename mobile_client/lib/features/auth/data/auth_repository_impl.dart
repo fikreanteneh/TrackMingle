@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:dartz/dartz.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:near_by_friends/core/error/failure.dart';
-import 'package:near_by_friends/features/auth/data/auth_model.dart';
-import 'package:near_by_friends/features/auth/domain/auth_entity.dart';
-import 'package:near_by_friends/features/auth/domain/auth_repository.dart';
+import 'package:track_mingle/core/error/failure.dart';
+import 'package:track_mingle/features/auth/data/auth_model.dart';
+import 'package:track_mingle/features/auth/domain/auth_entity.dart';
+import 'package:track_mingle/features/auth/domain/auth_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 //TODO Error Handling For All
@@ -25,12 +25,13 @@ class AuthRepositoryImpl implements AuthRepository {
         final authModel = AuthModel.fromSupabaseClient(session);
         controller.add(Right(authModel));
       } else {
-        controller.add(const Left(
-            Failure(message: 'Unauthenticated', statusCode: 401)));
+        controller.add(
+            const Left(Failure(message: 'Unauthenticated', statusCode: 401)));
       }
     });
     return controller.stream;
   }
+
   @override
   Future<Either<Failure, bool>> signInWithEmail(
       AuthWithEmailEntity authWithEmailEntity) async {
