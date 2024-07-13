@@ -4,6 +4,10 @@ export interface PageParam {
 }
 
 
+export interface SearchParam extends PageParam{
+    search: string;
+}
+
 export interface IDParam { 
     id: string;
 }

@@ -3,6 +3,8 @@
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { TsoaRoute, fetchMiddlewares, ExpressTemplateService } from '@tsoa/runtime';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { ProfileController } from './../controllers/profile.controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { FriendRequestController } from './../controllers/friend.request.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { FriendController } from './../controllers/friend.controller';
@@ -10,6 +12,8 @@ import { FriendController } from './../controllers/friend.controller';
 import { AuthController } from './../controllers/auth.controller';
 import { expressAuthentication } from './../middlewares/authentication.middleware';
 // @ts-ignore - no great way to install types from subpackage
+import { iocContainer } from './../iocModule';
+import type { IocContainer, IocContainerFactory } from '@tsoa/runtime';
 import type { Request as ExRequest, Response as ExResponse, RequestHandler, Router } from 'express';
 
 const expressAuthenticationRecasted = expressAuthentication as (req: ExRequest, securityName: string, scopes?: string[], res?: ExResponse) => Promise<any>;
@@ -18,6 +22,91 @@ const expressAuthenticationRecasted = expressAuthentication as (req: ExRequest, 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
+    "FriendRequestDTO": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"string","required":true},
+            "senderId": {"dataType":"string","required":true},
+            "receiverId": {"dataType":"string","required":true},
+            "createdAt": {"dataType":"datetime","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "UserDTO": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"string","required":true},
+            "username": {"dataType":"string","required":true},
+            "fullName": {"dataType":"string"},
+            "profilePicture": {"dataType":"string"},
+            "twitter": {"dataType":"string"},
+            "linkedin": {"dataType":"string"},
+            "facebook": {"dataType":"string"},
+            "instagram": {"dataType":"string"},
+            "phoneNumber": {"dataType":"string"},
+            "createdAt": {"dataType":"datetime","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "UserPersonalDTO": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"string","required":true},
+            "username": {"dataType":"string","required":true},
+            "fullName": {"dataType":"string"},
+            "profilePicture": {"dataType":"string"},
+            "twitter": {"dataType":"string"},
+            "linkedin": {"dataType":"string"},
+            "facebook": {"dataType":"string"},
+            "instagram": {"dataType":"string"},
+            "phoneNumber": {"dataType":"string"},
+            "createdAt": {"dataType":"datetime","required":true},
+            "SentRequests": {"dataType":"array","array":{"dataType":"refObject","ref":"FriendRequestDTO"}},
+            "ReceivedRequests": {"dataType":"array","array":{"dataType":"refObject","ref":"FriendRequestDTO"}},
+            "Friends": {"dataType":"array","array":{"dataType":"refObject","ref":"UserDTO"}},
+            "updatedAt": {"dataType":"datetime","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "UserCreateDTO": {
+        "dataType": "refObject",
+        "properties": {
+            "username": {"dataType":"string","required":true},
+            "fullName": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "UpdateLinksDTO": {
+        "dataType": "refObject",
+        "properties": {
+            "twitter": {"dataType":"string"},
+            "linkedin": {"dataType":"string"},
+            "facebook": {"dataType":"string"},
+            "instagram": {"dataType":"string"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "UpdateUsernameDTO": {
+        "dataType": "refObject",
+        "properties": {
+            "username": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "UpdateFullNameDTO": {
+        "dataType": "refObject",
+        "properties": {
+            "fullName": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "ResponseSuccessType_any_": {
         "dataType": "refObject",
         "properties": {
@@ -46,45 +135,6 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "UserDTO": {
-        "dataType": "refObject",
-        "properties": {
-            "id": {"dataType":"string","required":true},
-            "username": {"dataType":"string","required":true},
-            "fullName": {"dataType":"string"},
-            "profilePicture": {"dataType":"string"},
-            "twitter": {"dataType":"string"},
-            "linkedin": {"dataType":"string"},
-            "facebook": {"dataType":"string"},
-            "instagram": {"dataType":"string"},
-            "email": {"dataType":"string"},
-            "phoneNumber": {"dataType":"string"},
-            "createdAt": {"dataType":"datetime","required":true},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "ResponseSuccessType_UserDTO_": {
-        "dataType": "refObject",
-        "properties": {
-            "success": {"dataType":"boolean","required":true},
-            "error": {"dataType":"enum","enums":[null],"required":true},
-            "response": {"ref":"UserDTO","required":true},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "AuthRegisterDTO": {
-        "dataType": "refObject",
-        "properties": {
-            "email": {"dataType":"string","required":true},
-            "password": {"dataType":"string","required":true},
-            "username": {"dataType":"string","required":true},
-            "fullName": {"dataType":"string","required":true},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "AuthTokenDTO": {
         "dataType": "refObject",
         "properties": {
@@ -103,7 +153,7 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "AuthLoginDTO": {
+    "AuthDTO": {
         "dataType": "refObject",
         "properties": {
             "email": {"dataType":"string","required":true},
@@ -122,12 +172,196 @@ export function RegisterRoutes(app: Router) {
     //  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
+        app.get('/profile',
+            authenticateMiddleware([{"BearerAuth":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(ProfileController)),
+            ...(fetchMiddlewares<RequestHandler>(ProfileController.prototype.getProfile)),
+
+            async function ProfileController_getProfile(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const container: IocContainer = typeof iocContainer === 'function' ? (iocContainer as IocContainerFactory)(request) : iocContainer;
+
+                const controller: any = await container.get<ProfileController>(ProfileController);
+                if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+                }
+
+              templateService.apiHandler({
+                methodName: 'getProfile',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: 200,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/profile',
+            authenticateMiddleware([{"BearerAuth":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(ProfileController)),
+            ...(fetchMiddlewares<RequestHandler>(ProfileController.prototype.createProfile)),
+
+            async function ProfileController_createProfile(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    payload: {"in":"body","name":"payload","required":true,"ref":"UserCreateDTO"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const container: IocContainer = typeof iocContainer === 'function' ? (iocContainer as IocContainerFactory)(request) : iocContainer;
+
+                const controller: any = await container.get<ProfileController>(ProfileController);
+                if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+                }
+
+              templateService.apiHandler({
+                methodName: 'createProfile',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: 201,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.put('/profile/updateLinks',
+            authenticateMiddleware([{"BearerAuth":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(ProfileController)),
+            ...(fetchMiddlewares<RequestHandler>(ProfileController.prototype.updateLinks)),
+
+            async function ProfileController_updateLinks(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    payload: {"in":"body","name":"payload","required":true,"ref":"UpdateLinksDTO"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const container: IocContainer = typeof iocContainer === 'function' ? (iocContainer as IocContainerFactory)(request) : iocContainer;
+
+                const controller: any = await container.get<ProfileController>(ProfileController);
+                if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+                }
+
+              templateService.apiHandler({
+                methodName: 'updateLinks',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: 200,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.put('/profile/updateUsername',
+            authenticateMiddleware([{"BearerAuth":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(ProfileController)),
+            ...(fetchMiddlewares<RequestHandler>(ProfileController.prototype.updateUsername)),
+
+            async function ProfileController_updateUsername(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    payload: {"in":"body","name":"payload","required":true,"ref":"UpdateUsernameDTO"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const container: IocContainer = typeof iocContainer === 'function' ? (iocContainer as IocContainerFactory)(request) : iocContainer;
+
+                const controller: any = await container.get<ProfileController>(ProfileController);
+                if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+                }
+
+              templateService.apiHandler({
+                methodName: 'updateUsername',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: 200,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/profile/updateFullName',
+            authenticateMiddleware([{"BearerAuth":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(ProfileController)),
+            ...(fetchMiddlewares<RequestHandler>(ProfileController.prototype.updateFullName)),
+
+            async function ProfileController_updateFullName(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    payload: {"in":"body","name":"payload","required":true,"ref":"UpdateFullNameDTO"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const container: IocContainer = typeof iocContainer === 'function' ? (iocContainer as IocContainerFactory)(request) : iocContainer;
+
+                const controller: any = await container.get<ProfileController>(ProfileController);
+                if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+                }
+
+              templateService.apiHandler({
+                methodName: 'updateFullName',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: 200,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/friendRequest/:id',
             authenticateMiddleware([{"BearerAuth":[]}]),
             ...(fetchMiddlewares<RequestHandler>(FriendRequestController)),
             ...(fetchMiddlewares<RequestHandler>(FriendRequestController.prototype.createFriendRequest)),
 
-            function FriendRequestController_createFriendRequest(request: ExRequest, response: ExResponse, next: any) {
+            async function FriendRequestController_createFriendRequest(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
                     request: {"in":"request","name":"request","required":true,"dataType":"object"},
                     id: {"in":"path","name":"id","required":true,"dataType":"string"},
@@ -139,7 +373,12 @@ export function RegisterRoutes(app: Router) {
             try {
                 validatedArgs = templateService.getValidatedArgs({ args, request, response });
 
-                const controller = new FriendRequestController();
+                const container: IocContainer = typeof iocContainer === 'function' ? (iocContainer as IocContainerFactory)(request) : iocContainer;
+
+                const controller: any = await container.get<FriendRequestController>(FriendRequestController);
+                if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+                }
 
               templateService.apiHandler({
                 methodName: 'createFriendRequest',
@@ -159,7 +398,7 @@ export function RegisterRoutes(app: Router) {
             ...(fetchMiddlewares<RequestHandler>(FriendRequestController)),
             ...(fetchMiddlewares<RequestHandler>(FriendRequestController.prototype.acceptFriendRequest)),
 
-            function FriendRequestController_acceptFriendRequest(request: ExRequest, response: ExResponse, next: any) {
+            async function FriendRequestController_acceptFriendRequest(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
                     request: {"in":"request","name":"request","required":true,"dataType":"object"},
                     id: {"in":"path","name":"id","required":true,"dataType":"string"},
@@ -171,7 +410,12 @@ export function RegisterRoutes(app: Router) {
             try {
                 validatedArgs = templateService.getValidatedArgs({ args, request, response });
 
-                const controller = new FriendRequestController();
+                const container: IocContainer = typeof iocContainer === 'function' ? (iocContainer as IocContainerFactory)(request) : iocContainer;
+
+                const controller: any = await container.get<FriendRequestController>(FriendRequestController);
+                if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+                }
 
               templateService.apiHandler({
                 methodName: 'acceptFriendRequest',
@@ -191,7 +435,7 @@ export function RegisterRoutes(app: Router) {
             ...(fetchMiddlewares<RequestHandler>(FriendRequestController)),
             ...(fetchMiddlewares<RequestHandler>(FriendRequestController.prototype.getSentFriendRequests)),
 
-            function FriendRequestController_getSentFriendRequests(request: ExRequest, response: ExResponse, next: any) {
+            async function FriendRequestController_getSentFriendRequests(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
                     request: {"in":"request","name":"request","required":true,"dataType":"object"},
             };
@@ -202,7 +446,12 @@ export function RegisterRoutes(app: Router) {
             try {
                 validatedArgs = templateService.getValidatedArgs({ args, request, response });
 
-                const controller = new FriendRequestController();
+                const container: IocContainer = typeof iocContainer === 'function' ? (iocContainer as IocContainerFactory)(request) : iocContainer;
+
+                const controller: any = await container.get<FriendRequestController>(FriendRequestController);
+                if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+                }
 
               templateService.apiHandler({
                 methodName: 'getSentFriendRequests',
@@ -222,7 +471,7 @@ export function RegisterRoutes(app: Router) {
             ...(fetchMiddlewares<RequestHandler>(FriendRequestController)),
             ...(fetchMiddlewares<RequestHandler>(FriendRequestController.prototype.getFriendRequests)),
 
-            function FriendRequestController_getFriendRequests(request: ExRequest, response: ExResponse, next: any) {
+            async function FriendRequestController_getFriendRequests(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
                     request: {"in":"request","name":"request","required":true,"dataType":"object"},
             };
@@ -233,7 +482,12 @@ export function RegisterRoutes(app: Router) {
             try {
                 validatedArgs = templateService.getValidatedArgs({ args, request, response });
 
-                const controller = new FriendRequestController();
+                const container: IocContainer = typeof iocContainer === 'function' ? (iocContainer as IocContainerFactory)(request) : iocContainer;
+
+                const controller: any = await container.get<FriendRequestController>(FriendRequestController);
+                if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+                }
 
               templateService.apiHandler({
                 methodName: 'getFriendRequests',
@@ -252,7 +506,7 @@ export function RegisterRoutes(app: Router) {
             ...(fetchMiddlewares<RequestHandler>(FriendController)),
             ...(fetchMiddlewares<RequestHandler>(FriendController.prototype.register)),
 
-            function FriendController_register(request: ExRequest, response: ExResponse, next: any) {
+            async function FriendController_register(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
                     request: {"in":"request","name":"request","required":true,"dataType":"object"},
                     id: {"in":"path","name":"id","required":true,"dataType":"string"},
@@ -264,7 +518,12 @@ export function RegisterRoutes(app: Router) {
             try {
                 validatedArgs = templateService.getValidatedArgs({ args, request, response });
 
-                const controller = new FriendController();
+                const container: IocContainer = typeof iocContainer === 'function' ? (iocContainer as IocContainerFactory)(request) : iocContainer;
+
+                const controller: any = await container.get<FriendController>(FriendController);
+                if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+                }
 
               templateService.apiHandler({
                 methodName: 'register',
@@ -283,9 +542,9 @@ export function RegisterRoutes(app: Router) {
             ...(fetchMiddlewares<RequestHandler>(AuthController)),
             ...(fetchMiddlewares<RequestHandler>(AuthController.prototype.register)),
 
-            function AuthController_register(request: ExRequest, response: ExResponse, next: any) {
+            async function AuthController_register(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
-                    requestBody: {"in":"body","name":"requestBody","required":true,"ref":"AuthRegisterDTO"},
+                    requestBody: {"in":"body","name":"requestBody","required":true,"ref":"AuthDTO"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -294,7 +553,12 @@ export function RegisterRoutes(app: Router) {
             try {
                 validatedArgs = templateService.getValidatedArgs({ args, request, response });
 
-                const controller = new AuthController();
+                const container: IocContainer = typeof iocContainer === 'function' ? (iocContainer as IocContainerFactory)(request) : iocContainer;
+
+                const controller: any = await container.get<AuthController>(AuthController);
+                if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+                }
 
               templateService.apiHandler({
                 methodName: 'register',
@@ -313,9 +577,9 @@ export function RegisterRoutes(app: Router) {
             ...(fetchMiddlewares<RequestHandler>(AuthController)),
             ...(fetchMiddlewares<RequestHandler>(AuthController.prototype.login)),
 
-            function AuthController_login(request: ExRequest, response: ExResponse, next: any) {
+            async function AuthController_login(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
-                    requestBody: {"in":"body","name":"requestBody","required":true,"ref":"AuthLoginDTO"},
+                    requestBody: {"in":"body","name":"requestBody","required":true,"ref":"AuthDTO"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -324,7 +588,12 @@ export function RegisterRoutes(app: Router) {
             try {
                 validatedArgs = templateService.getValidatedArgs({ args, request, response });
 
-                const controller = new AuthController();
+                const container: IocContainer = typeof iocContainer === 'function' ? (iocContainer as IocContainerFactory)(request) : iocContainer;
+
+                const controller: any = await container.get<AuthController>(AuthController);
+                if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+                }
 
               templateService.apiHandler({
                 methodName: 'login',

@@ -16,7 +16,7 @@ type CachingService struct {
 	context     context.Context
 }
 
-func (service *CachingService) GetLocationUpdate(friendIds *[]string, handler func([]byte) error)(any, error){
+func (service *CachingService) GetLocationUpdate(friendIds *[]string, handler func([]byte) error) (any, error) {
 	subscription := service.redisClient.Subscribe(service.context, *friendIds...)
 
 	defer subscription.Close()
@@ -36,7 +36,7 @@ func (service *CachingService) GetLocationUpdate(friendIds *[]string, handler fu
 }
 
 func (service *CachingService) UpdateLocation(location dtos.LocationHistoryDTO) {
-	jsonData , _ := json.Marshal(location)
+	jsonData, _ := json.Marshal(location)
 	update := service.redisClient.Publish(
 		service.context,
 		location.UserID,
@@ -50,6 +50,6 @@ func (service *CachingService) UpdateLocation(location dtos.LocationHistoryDTO) 
 func NewCachingService(client *redis.Client) caching_service.CachingServiceInterface {
 	return &CachingService{
 		redisClient: client,
-		context:     context.Background(),
+		context:     context.TODO(),
 	}
 }

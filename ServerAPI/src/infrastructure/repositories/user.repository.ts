@@ -1,21 +1,25 @@
 import { PrismaClient } from "@prisma/client/extension";
-import GenericRepository from "./generic.repository";
-import { UserModel } from "../../domain/models/user.model";
+import { container, inject, singleton } from "tsyringe";
 import { IUserRepository } from "../../application/interfaces/persistence/user.repository";
+import { UserModel } from "../../domain/models/user.model";
+import GenericRepository from "./generic.repository";
 
-export default class UserRepository extends GenericRepository<UserModel> implements IUserRepository {
+@singleton()
+export default class UserRepository
+  extends GenericRepository<UserModel>
+  implements IUserRepository
+{
   prisma: PrismaClient;
 
-  constructor(prisma: PrismaClient) {
+  constructor(@inject("PrismaClient") prisma: PrismaClient) {
     super(prisma.User, prisma);
     this.prisma = prisma;
-    }
+  }
   public async getByUsername(username: string): Promise<UserModel> {
     const record = await this.model.findUnique({
       where: { username: username },
     });
     return record;
-
   }
   public async getByEmail(email: string): Promise<UserModel> {
     const record = await this.model.findUnique({
@@ -29,7 +33,11 @@ export default class UserRepository extends GenericRepository<UserModel> impleme
     });
     return record;
   }
-  public async search(query: string, pageNumber: number, pageSize: number): Promise<UserModel[]> {
+  public async search(
+    query: string,
+    pageNumber: number,
+    pageSize: number
+  ): Promise<UserModel[]> {
     //TODO: Implement completed search method
     const records = await this.model.findMany({
       where: {
@@ -50,5 +58,4 @@ export default class UserRepository extends GenericRepository<UserModel> impleme
     });
     return record;
   }
-  
 }

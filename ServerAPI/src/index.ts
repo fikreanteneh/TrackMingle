@@ -2,12 +2,13 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import swaggerUi from "swagger-ui-express";
-
+import "reflect-metadata";
 
 import { RegisterRoutes } from "./api/routes/routes";
 import swaggerDocument from "./api/swagger/swagger.json";
 import { errorMiddleware } from "./api/middlewares/error.middleware";
 import { AuthDetailDTO } from "./application/dtos/auth.dto";
+import PrepareDependencies from "./injection";
 
 declare global {
   namespace Express {
@@ -23,6 +24,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+PrepareDependencies();
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

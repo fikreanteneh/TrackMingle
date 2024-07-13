@@ -2,9 +2,9 @@ import { BaseModel } from "./base.model";
 
 export interface UserModel extends BaseModel {
   username: string;
+  fullName: string;
+  email: string;
   profilePicture?: string;
-  fullName?: string;
-  email?: string;
   twitter?: string;
   linkedin?: string;
   facebook?: string;
