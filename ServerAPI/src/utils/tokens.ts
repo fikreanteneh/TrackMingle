@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import { AuthenticatedOrganizer } from "types/token.types";
 
 export const encodeToken = (payload: any) => {
   const token = jwt.sign(payload, `${process.env.JWT_SECRET}`, {
