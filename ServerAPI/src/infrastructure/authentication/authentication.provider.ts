@@ -1,4 +1,3 @@
-import SupabaseClient from "@supabase/supabase-js/dist/module/SupabaseClient";
 import { container, inject, singleton } from "tsyringe";
 import {
   AuthDetailDTO,
@@ -7,6 +6,7 @@ import {
   UserMetadataCustom,
 } from "../../application/dtos/auth.dto";
 import { IAuthenticationProvider } from "../../application/interfaces/authentication/authentication.provider";
+import { SupabaseClient } from "@supabase/supabase-js";
 
 //TODO: iMPLEMENT Error Handling
 @singleton()

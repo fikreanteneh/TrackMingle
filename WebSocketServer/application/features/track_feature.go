@@ -7,15 +7,16 @@ import (
 	"WebSocketServer/config"
 	"time"
 )
+
 type TrackFeature struct {
-	environment    *config.Environment
-	cachingService caching_service.CachingServiceInterface
+	environment      *config.Environment
+	cachingService   caching_service.CachingServiceInterface
 	friendAPIService api_service.FriendAPIServiceInterface
 }
 
-func (feature *TrackFeature) UpdateMyLocation(currUser *dtos.AuthDetailDTO,payload dtos.LocationDTO) (string, error) {
+func (feature *TrackFeature) UpdateMyLocation(currUser *dtos.AuthDetailDTO, payload dtos.LocationDTO) (string, error) {
 	feature.cachingService.UpdateLocation(dtos.LocationHistoryDTO{
-		UserID:        currUser.ID,
+		UserID:    currUser.ID,
 		Latitude:  payload.Latitude,
 		Longitude: payload.Longitude,
 		CreatedAt: time.Now(),
@@ -23,25 +24,18 @@ func (feature *TrackFeature) UpdateMyLocation(currUser *dtos.AuthDetailDTO,paylo
 	return "Succssfully updated new location", nil
 }
 
-func (feature *TrackFeature) GetLocationUpdate(currUser *dtos.AuthDetailDTO, payload func([]byte) error)  (any, error) {
+func (feature *TrackFeature) GetLocationUpdate(currUser *dtos.AuthDetailDTO, payload func([]byte) error) (any, error) {
 	friendIds, err := feature.friendAPIService.GetAllFriends(currUser.ID)
-	count := 0
-	for err != nil {
-		count++
-		friendIds, err = feature.friendAPIService.GetAllFriends(currUser.ID)
-		if count == 5 {
-			return nil, err
-		}
+	if err != nil {
+		return nil, err
 	}
 	return feature.cachingService.GetLocationUpdate(&friendIds.Friends, payload)
 }
 
-
-
-func NewTrackFeature(environment *config.Environment ,cachingService caching_service.CachingServiceInterface, friendAPIService api_service.FriendAPIServiceInterface) *TrackFeature {
+func NewTrackFeature(environment *config.Environment, cachingService caching_service.CachingServiceInterface, friendAPIService api_service.FriendAPIServiceInterface) *TrackFeature {
 	return &TrackFeature{
-		environment: environment,
-		cachingService: cachingService,
+		environment:      environment,
+		cachingService:   cachingService,
 		friendAPIService: friendAPIService,
 	}
 }
