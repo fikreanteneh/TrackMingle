@@ -17,8 +17,9 @@ func ListenToUpdatesHandler(ws *websocket.Conn, currUser *dtos.AuthDetailDTO, tr
 				log.Println("=====>", err)
 				return err
 			}
-			log.Println("=====> ",err)
+			log.Println("=====> ", err)
 		}
+		log.Println("====Update Sent===> ", currUser.ID, string(payload))
 		return nil
 	}
 	trackFeature.GetLocationUpdate(currUser, handleSendLocationUpdates)
