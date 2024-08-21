@@ -320,7 +320,11 @@
 		}
 	},
 	"info": {
-		"title": "",
+		"title": "serverapi",
+		"version": "1.0.0",
+		"license": {
+			"name": "ISC"
+		},
 		"contact": {}
 	},
 	"paths": {

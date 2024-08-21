@@ -12,7 +12,7 @@ import { FriendController } from './../controllers/friend.controller';
 import { AuthController } from './../controllers/auth.controller';
 import { expressAuthentication } from './../middlewares/authentication.middleware';
 // @ts-ignore - no great way to install types from subpackage
-import { iocContainer } from './../iocModule';
+import { iocContainer } from './../iocModule/ioc';
 import type { IocContainer, IocContainerFactory } from '@tsoa/runtime';
 import type { Request as ExRequest, Response as ExResponse, RequestHandler, Router } from 'express';
 
@@ -163,15 +163,22 @@ const models: TsoaRoute.Models = {
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
-const templateService = new ExpressTemplateService(models, {"noImplicitAdditionalProperties":"throw-on-extras"});
+const templateService = new ExpressTemplateService(models, {"noImplicitAdditionalProperties":"throw-on-extras","bodyCoercion":true});
 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
+
+
+
 export function RegisterRoutes(app: Router) {
+
     // ###########################################################################################################
     //  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
+
+
+    
         app.get('/profile',
             authenticateMiddleware([{"BearerAuth":[]}]),
             ...(fetchMiddlewares<RequestHandler>(ProfileController)),
@@ -195,7 +202,7 @@ export function RegisterRoutes(app: Router) {
                 controller.setStatus(undefined);
                 }
 
-              templateService.apiHandler({
+              await templateService.apiHandler({
                 methodName: 'getProfile',
                 controller,
                 response,
@@ -232,7 +239,7 @@ export function RegisterRoutes(app: Router) {
                 controller.setStatus(undefined);
                 }
 
-              templateService.apiHandler({
+              await templateService.apiHandler({
                 methodName: 'createProfile',
                 controller,
                 response,
@@ -269,7 +276,7 @@ export function RegisterRoutes(app: Router) {
                 controller.setStatus(undefined);
                 }
 
-              templateService.apiHandler({
+              await templateService.apiHandler({
                 methodName: 'updateLinks',
                 controller,
                 response,
@@ -306,7 +313,7 @@ export function RegisterRoutes(app: Router) {
                 controller.setStatus(undefined);
                 }
 
-              templateService.apiHandler({
+              await templateService.apiHandler({
                 methodName: 'updateUsername',
                 controller,
                 response,
@@ -343,7 +350,7 @@ export function RegisterRoutes(app: Router) {
                 controller.setStatus(undefined);
                 }
 
-              templateService.apiHandler({
+              await templateService.apiHandler({
                 methodName: 'updateFullName',
                 controller,
                 response,
@@ -380,7 +387,7 @@ export function RegisterRoutes(app: Router) {
                 controller.setStatus(undefined);
                 }
 
-              templateService.apiHandler({
+              await templateService.apiHandler({
                 methodName: 'createFriendRequest',
                 controller,
                 response,
@@ -417,7 +424,7 @@ export function RegisterRoutes(app: Router) {
                 controller.setStatus(undefined);
                 }
 
-              templateService.apiHandler({
+              await templateService.apiHandler({
                 methodName: 'acceptFriendRequest',
                 controller,
                 response,
@@ -453,7 +460,7 @@ export function RegisterRoutes(app: Router) {
                 controller.setStatus(undefined);
                 }
 
-              templateService.apiHandler({
+              await templateService.apiHandler({
                 methodName: 'getSentFriendRequests',
                 controller,
                 response,
@@ -489,7 +496,7 @@ export function RegisterRoutes(app: Router) {
                 controller.setStatus(undefined);
                 }
 
-              templateService.apiHandler({
+              await templateService.apiHandler({
                 methodName: 'getFriendRequests',
                 controller,
                 response,
@@ -525,7 +532,7 @@ export function RegisterRoutes(app: Router) {
                 controller.setStatus(undefined);
                 }
 
-              templateService.apiHandler({
+              await templateService.apiHandler({
                 methodName: 'register',
                 controller,
                 response,
@@ -560,7 +567,7 @@ export function RegisterRoutes(app: Router) {
                 controller.setStatus(undefined);
                 }
 
-              templateService.apiHandler({
+              await templateService.apiHandler({
                 methodName: 'register',
                 controller,
                 response,
@@ -595,7 +602,7 @@ export function RegisterRoutes(app: Router) {
                 controller.setStatus(undefined);
                 }
 
-              templateService.apiHandler({
+              await templateService.apiHandler({
                 methodName: 'login',
                 controller,
                 response,

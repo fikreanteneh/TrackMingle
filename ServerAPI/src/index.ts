@@ -1,12 +1,11 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
-import swaggerUi from "swagger-ui-express";
 import "reflect-metadata";
-
+import swaggerUi from "swagger-ui-express";
+import { errorMiddleware } from "./api/middlewares/error.middleware";
 import { RegisterRoutes } from "./api/routes/routes";
 import swaggerDocument from "./api/swagger/swagger.json";
-import { errorMiddleware } from "./api/middlewares/error.middleware";
 import { AuthDetailDTO } from "./application/dtos/auth.dto";
 import PrepareDependencies from "./injection";
 
@@ -33,7 +32,6 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-// app.use(authenticationMiddleware);
 RegisterRoutes(app);
 app.use(errorMiddleware);
 

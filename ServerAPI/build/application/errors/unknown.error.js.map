@@ -1,1 +1,0 @@
-{"version":3,"file":"unknown.error.js","sourceRoot":"","sources":["../../../src/application/errors/unknown.error.ts"],"names":[],"mappings":"AAAA,OAAO,WAAW,MAAM,gBAAgB,CAAC;AAEzC,MAAM,CAAC,OAAO,OAAO,YAAa,SAAQ,WAAW;IACnD,YAAY,UAAkB,sBAAsB;QAClD,KAAK,CAAC,OAAO,EAAE,GAAG,CAAC,CAAC;QACpB,KAAK,CAAC,iBAAiB,CAAC,IAAI,EAAE,IAAI,CAAC,WAAW,CAAC,CAAC;IAClD,CAAC;CACF"}
