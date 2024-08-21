@@ -21,6 +21,7 @@ export default class AuthService {
     payload: AuthDTO,
     params: null
   ): Promise<AuthTokenDTO> {
+    //TODO: Add to User Table
     return await this.authProvider.register(payload);
   }
 
