@@ -25,14 +25,26 @@ export default class AuthenticationProvider implements IAuthenticationProvider {
     return { token: data.session.access_token };
   }
 
-  async register(payload: AuthDTO): Promise<AuthTokenDTO> {
+  async register(payload: AuthDTO): Promise<AuthDetailDTO> {
     const { data, error } = await this.supabase.auth.admin.createUser({
       email: payload.email,
       password: payload.password,
       email_confirm: true,
     });
     if (error) throw error;
-    return this.signIn(payload);
+    const authDetail: AuthDetailDTO = {
+      id: data.user.id,
+      email: data.user.email ?? "",
+      role: data.user.role ?? "",
+      verified: data.user.email_confirmed_at ? true : false,
+      metadata: {
+        userId: data.user.user_metadata["userId"] ?? "",
+        username: data.user.user_metadata["username"] ?? "",
+        fullName: data.user.user_metadata["fullName"] ?? "",
+        profilePicture: data.user.user_metadata["profilePicture"] ?? "",
+      },
+    };
+    return authDetail;
   }
 
   async verify(payload: AuthTokenDTO): Promise<AuthDetailDTO> {

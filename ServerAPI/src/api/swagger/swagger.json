@@ -672,7 +672,14 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/AuthDTO"
+								"allOf": [
+									{
+										"$ref": "#/components/schemas/AuthDTO"
+									},
+									{
+										"$ref": "#/components/schemas/UserCreateDTO"
+									}
+								]
 							}
 						}
 					}
