@@ -2,7 +2,6 @@ import { Request as ERequest } from "express";
 import {
   Body,
   Get,
-  Post,
   Put,
   Request,
   Route,
@@ -15,7 +14,6 @@ import {
   UpdateFullNameDTO,
   UpdateLinksDTO,
   UpdateUsernameDTO,
-  UserCreateDTO,
   UserDTO,
   UserPersonalDTO,
 } from "../../application/dtos/user.dto";
@@ -41,25 +39,24 @@ export class ProfileController {
     return await service.GetProfile(request.user as AuthDetailDTO, null, null);
   }
 
+  // @Post("")
+  // @SuccessResponse("201")
+  // public async createProfile(
+  //   @Request() request: ERequest,
+  //   @Body() payload: UserCreateDTO
+  // ): Promise<UserDTO> {
+  //   const service = new ProfileService(
+  //     new UserRepository(prisma()),
+  //     new AuthenticationProvider(supabase())
+  //   );
+  //   return await service.CreateProfile(
+  //     request.user as AuthDetailDTO,
+  //     payload,
+  //     null
+  //   );
+  // }
 
-  @Post("")
-  @SuccessResponse("201")
-  public async createProfile(
-    @Request() request: ERequest,
-    @Body() payload: UserCreateDTO
-  ): Promise<UserDTO> {
-    const service = new ProfileService(
-      new UserRepository(prisma()),
-      new AuthenticationProvider(supabase())
-    );
-    return await service.CreateProfile(
-      request.user as AuthDetailDTO,
-      payload,
-      null
-    );
-  }
-
-  @Put("updateLinks")
+  @Put("update_links")
   @SuccessResponse("200")
   public async updateLinks(
     @Request() request: ERequest,
@@ -76,7 +73,7 @@ export class ProfileController {
     );
   }
 
-  @Put("updateUsername")
+  @Put("update_username")
   @SuccessResponse("200")
   public async updateUsername(
     @Request() request: ERequest,
@@ -93,7 +90,7 @@ export class ProfileController {
     );
   }
 
-  @Post("updateFullName")
+  @Put("update_fullName")
   @Security("BearerAuth")
   @SuccessResponse("200")
   public async updateFullName(

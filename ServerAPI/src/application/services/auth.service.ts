@@ -23,12 +23,21 @@ export default class AuthService {
     params: null
   ): Promise<AuthTokenDTO> {
     const auth = await this.authProvider.register(payload);
+
     const user = await this.userRepository.create({
       id: auth.id,
       username: payload.username,
       fullName: payload.fullName,
       email: auth.email,
     });
+
+    await this.authProvider.updateMetadata(auth.id, {
+      username: payload.username,
+      fullName: payload.fullName,
+      userId: user.id as string,
+      profilePicture: null,
+    });
+
     return this.authProvider.signIn(payload);
   }
 
