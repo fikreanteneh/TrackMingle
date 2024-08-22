@@ -1,5 +1,6 @@
 import { inject, injectable, singleton } from "tsyringe";
 import { AuthDTO, AuthTokenDTO } from "../dtos/auth.dto";
+import { UserCreateDTO } from "../dtos/user.dto";
 import { IAuthenticationProvider } from "../interfaces/authentication/authentication.provider";
 import { IUserRepository } from "../interfaces/persistence/user.repository";
 
@@ -16,14 +17,35 @@ export default class AuthService {
     this.userRepository = userRepository;
   }
 
-  async register(
+  async registerWithEmail(
     currUser: null,
-    payload: AuthDTO,
+    payload: AuthDTO & UserCreateDTO,
     params: null
   ): Promise<AuthTokenDTO> {
-    //TODO: Add to User Table
-    return await this.authProvider.register(payload);
+    const auth = await this.authProvider.register(payload);
+
+    const user = await this.userRepository.create({
+      id: auth.id,
+      username: payload.username,
+      fullName: payload.fullName,
+      email: auth.email,
+    });
+
+    await this.authProvider.updateMetadata(auth.id, {
+      username: payload.username,
+      fullName: payload.fullName,
+      userId: user.id as string,
+      profilePicture: null,
+    });
+
+    return this.authProvider.signIn(payload);
   }
+
+  //TODO: Registered with Phone Number
+  async registerWithPhoneNumber() {}
+
+  //TODO: Registered with Google
+  async registerWithGoogle() {}
 
   async login(
     currUser: null,

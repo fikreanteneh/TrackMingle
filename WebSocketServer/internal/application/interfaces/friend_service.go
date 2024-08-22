@@ -1,6 +1,6 @@
-package api_service
+package interfaces
 
-import "WebSocketServer/application/dtos"
+import "WebSocketServer/internal/application/dtos"
 
 type FriendAPIServiceInterface interface {
 	GetAllFriends(id string) (*dtos.FriendDTO, error)

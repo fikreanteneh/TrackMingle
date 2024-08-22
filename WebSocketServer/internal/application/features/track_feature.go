@@ -1,17 +1,16 @@
 package features
 
 import (
-	"WebSocketServer/application/dtos"
-	"WebSocketServer/application/interfaces/api_service"
-	"WebSocketServer/application/interfaces/caching_service"
-	"WebSocketServer/config"
+	"WebSocketServer/internal/application/dtos"
+	"WebSocketServer/internal/application/interfaces"
+	"WebSocketServer/internal/config"
 	"time"
 )
 
 type TrackFeature struct {
 	environment      *config.Environment
-	cachingService   caching_service.CachingServiceInterface
-	friendAPIService api_service.FriendAPIServiceInterface
+	cachingService   interfaces.CachingServiceInterface
+	friendAPIService interfaces.FriendAPIServiceInterface
 }
 
 func (feature *TrackFeature) UpdateMyLocation(currUser *dtos.AuthDetailDTO, payload dtos.LocationDTO) (string, error) {
@@ -32,7 +31,7 @@ func (feature *TrackFeature) GetLocationUpdate(currUser *dtos.AuthDetailDTO, pay
 	return feature.cachingService.GetLocationUpdate(&friendIds.Friends, payload)
 }
 
-func NewTrackFeature(environment *config.Environment, cachingService caching_service.CachingServiceInterface, friendAPIService api_service.FriendAPIServiceInterface) *TrackFeature {
+func NewTrackFeature(environment *config.Environment, cachingService interfaces.CachingServiceInterface, friendAPIService interfaces.FriendAPIServiceInterface) *TrackFeature {
 	return &TrackFeature{
 		environment:      environment,
 		cachingService:   cachingService,

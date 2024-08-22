@@ -1,6 +1,6 @@
-package auth_service
+package interfaces
 
-import "WebSocketServer/application/dtos"
+import "WebSocketServer/internal/application/dtos"
 
 type AuthServiceInterface interface {
 	VerifyUser(id string) (*dtos.AuthDetailDTO, error)
