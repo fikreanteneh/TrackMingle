@@ -1,6 +1,6 @@
-package caching_service
+package interfaces
 
-import "WebSocketServer/application/dtos"
+import "WebSocketServer/internal/application/dtos"
 
 type CachingServiceInterface interface {
 	UpdateLocation(location dtos.LocationHistoryDTO)

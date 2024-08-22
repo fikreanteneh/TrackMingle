@@ -1,8 +1,8 @@
-package handlers
+package api
 
 import (
-	"WebSocketServer/application/dtos"
-	"WebSocketServer/application/features"
+	"WebSocketServer/internal/application/dtos"
+	"WebSocketServer/internal/application/features"
 	"encoding/json"
 	"log"
 

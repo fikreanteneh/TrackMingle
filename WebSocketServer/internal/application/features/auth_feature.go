@@ -1,21 +1,21 @@
 package features
 
 import (
-	"WebSocketServer/application/dtos"
-	"WebSocketServer/application/interfaces/auth_service"
-	"WebSocketServer/config"
+	"WebSocketServer/internal/application/dtos"
+	"WebSocketServer/internal/application/interfaces"
+	"WebSocketServer/internal/config"
 )
 
 type AuthFeature struct {
 	environment *config.Environment
-	authService auth_service.AuthServiceInterface
+	authService interfaces.AuthServiceInterface
 }
 
 func (feature *AuthFeature) AuthenticateUser(currUser any, payload string) (*dtos.AuthDetailDTO, error) {
 	return feature.authService.VerifyUser(payload)
 }
 
-func NewAuthFeature(environment *config.Environment, authService auth_service.AuthServiceInterface) *AuthFeature {
+func NewAuthFeature(environment *config.Environment, authService interfaces.AuthServiceInterface) *AuthFeature {
 	return &AuthFeature{
 		environment: environment,
 		authService: authService,

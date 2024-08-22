@@ -1,8 +1,8 @@
-package caching_service
+package infrastructure
 
 import (
-	"WebSocketServer/application/dtos"
-	"WebSocketServer/application/interfaces/caching_service"
+	"WebSocketServer/internal/application/dtos"
+	"WebSocketServer/internal/application/interfaces"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -47,7 +47,12 @@ func (service *CachingService) UpdateLocation(location dtos.LocationHistoryDTO) 
 	}
 }
 
-func NewCachingService(client *redis.Client) caching_service.CachingServiceInterface {
+func NewCachingService(redisURL string) interfaces.CachingServiceInterface {
+	opt, err := redis.ParseURL(redisURL)
+	if err != nil {
+		panic(err)
+	}
+	client := redis.NewClient(opt)
 	return &CachingService{
 		redisClient: client,
 		context:     context.TODO(),
