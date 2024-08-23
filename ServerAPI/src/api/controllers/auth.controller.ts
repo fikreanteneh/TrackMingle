@@ -1,16 +1,13 @@
 // import { responseHandler } from "src/middlewares/response.middleware";
 import { Body, Controller, Post, Route, SuccessResponse, Tags } from "tsoa";
+import { injectable } from "tsyringe";
 import { AuthDTO, AuthTokenDTO } from "../../application/dtos/auth.dto";
 import AuthService from "../../application/services/auth.service";
-import { prisma } from "../../config/prisma";
-import supabase from "../../config/supabase";
-import AuthenticationProvider from "../../infrastructure/authentication/authentication.provider";
-import UserRepository from "../../infrastructure/repositories/user.repository";
 import {
   responseHandler,
   ResponseSuccessType,
 } from "../middlewares/response.middleware";
-import { injectable } from "tsyringe";
+import { UserCreateDTO } from "../../application/dtos/user.dto";
 
 @injectable()
 @Tags("Authentication")
@@ -25,13 +22,13 @@ export class AuthController extends Controller {
   @Post("register")
   @SuccessResponse("201")
   public async register(
-    @Body() requestBody: AuthDTO
+    @Body() requestBody: AuthDTO & UserCreateDTO
   ): Promise<ResponseSuccessType<AuthTokenDTO>> {
-    // const service = new AuthService(
-    //   new AuthenticationProvider(supabase()),
-    //   new UserRepository(prisma())
-    // );
-    const response = await this.authService.register(null, requestBody, null);
+    const response = await this.authService.registerWithEmail(
+      null,
+      requestBody,
+      null
+    );
     return responseHandler<AuthTokenDTO>(response);
   }
 

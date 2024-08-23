@@ -139,22 +139,6 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"UserCreateDTO": {
-				"properties": {
-					"username": {
-						"type": "string"
-					},
-					"fullName": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"username",
-					"fullName"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
 			"UpdateLinksDTO": {
 				"properties": {
 					"twitter": {
@@ -309,6 +293,22 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"UserCreateDTO": {
+				"properties": {
+					"username": {
+						"type": "string"
+					},
+					"fullName": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"username",
+					"fullName"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {
@@ -352,43 +352,9 @@
 					}
 				],
 				"parameters": []
-			},
-			"post": {
-				"operationId": "CreateProfile",
-				"responses": {
-					"201": {
-						"description": "",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/UserDTO"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Profile"
-				],
-				"security": [
-					{
-						"BearerAuth": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/UserCreateDTO"
-							}
-						}
-					}
-				}
 			}
 		},
-		"/profile/updateLinks": {
+		"/profile/update_links": {
 			"put": {
 				"operationId": "UpdateLinks",
 				"responses": {
@@ -424,7 +390,7 @@
 				}
 			}
 		},
-		"/profile/updateUsername": {
+		"/profile/update_username": {
 			"put": {
 				"operationId": "UpdateUsername",
 				"responses": {
@@ -460,8 +426,8 @@
 				}
 			}
 		},
-		"/profile/updateFullName": {
-			"post": {
+		"/profile/update_fullName": {
+			"put": {
 				"operationId": "UpdateFullName",
 				"responses": {
 					"200": {
@@ -672,7 +638,14 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/AuthDTO"
+								"allOf": [
+									{
+										"$ref": "#/components/schemas/AuthDTO"
+									},
+									{
+										"$ref": "#/components/schemas/UserCreateDTO"
+									}
+								]
 							}
 						}
 					}

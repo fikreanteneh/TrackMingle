@@ -1,9 +1,8 @@
 package api
 
 import (
-	"WebSocketServer/api/handlers"
-	"WebSocketServer/api/utils"
-	"WebSocketServer/application/features"
+	"WebSocketServer/internal/api/utils"
+	"WebSocketServer/internal/application/features"
 	"log"
 	"net/http"
 
@@ -32,9 +31,9 @@ func (c *ConnectionHandler) EstablishConnection(w http.ResponseWriter, r *http.R
 	}
 	trackFeature := c.trackFeatureInstantiate()
 	// This Listen to Friend location Updates will continue in a new goroutine
-	go handlers.ListenToUpdatesHandler(ws, currUser, trackFeature)
+	go ListenToUpdatesHandler(ws, currUser, trackFeature)
 	//This Listen to Client will continue in this goroutine
-	go handlers.ListenToClientHandler(ws, currUser, trackFeature)
+	go ListenToClientHandler(ws, currUser, trackFeature)
 }
 
 func NewConnectionHandler(

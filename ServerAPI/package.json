@@ -8,6 +8,7 @@
     "setup": "tsoa routes && tsoa spec",
     "migrate": "npx prisma migrate dev",
     "dev": "npm run setup && nodemon src/index.ts",
+    "start": "npm run setup && npm run build && node dist/index.js",
     "build": "tsc"
   },
   "author": "",

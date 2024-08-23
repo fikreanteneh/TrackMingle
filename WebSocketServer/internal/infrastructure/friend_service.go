@@ -1,8 +1,8 @@
-package api_service
+package infrastructure
 
 import (
-	"WebSocketServer/application/dtos"
-	"WebSocketServer/application/interfaces/api_service"
+	"WebSocketServer/internal/application/dtos"
+	"WebSocketServer/internal/application/interfaces"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -22,7 +22,7 @@ func (service *FriendService) GetAllFriends(id string) (*dtos.FriendDTO, error) 
 	friends := &dtos.SuccessFulResponse[dtos.FriendDTO]{}
 	err = json.NewDecoder(resp.Body).Decode(friends)
 	if err != nil {
-    	return nil, fmt.Errorf("error decoding response body: %w", err)
+		return nil, fmt.Errorf("error decoding response body: %w", err)
 	}
 	if !friends.Success {
 		return nil, errors.New("error fetching friends")
@@ -31,6 +31,6 @@ func (service *FriendService) GetAllFriends(id string) (*dtos.FriendDTO, error) 
 
 }
 
-func NewFriendService(BaseURL string) api_service.FriendAPIServiceInterface {
-	return &FriendService{BaseURL: BaseURL}
+func NewFriendService(baseURL string) interfaces.FriendAPIServiceInterface {
+	return &FriendService{BaseURL: baseURL}
 }
