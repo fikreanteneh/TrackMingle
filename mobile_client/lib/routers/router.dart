@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:track_mingle/features/auth/presentation/screen/sign_in_slide.dart';
-import 'package:track_mingle/features/auth/presentation/screen/sign_up_slide.dart';
-import 'package:track_mingle/features/routers/redirect_auth.dart';
+import 'package:track_mingle/presentation/screens/auth/sign_in_slide.dart';
+import 'package:track_mingle/presentation/screens/auth/sign_up_slide.dart';
+import 'package:track_mingle/routers/redirect_auth.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();

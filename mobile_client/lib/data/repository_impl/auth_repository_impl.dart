@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:track_mingle/core/error/failure.dart';
-import 'package:track_mingle/features/auth/data/auth_model.dart';
-import 'package:track_mingle/features/auth/domain/auth_entity.dart';
-import 'package:track_mingle/features/auth/domain/auth_repository.dart';
+import 'package:track_mingle/data/models/auth_model.dart';
+import 'package:track_mingle/domain/entity/auth_entity.dart';
+import 'package:track_mingle/domain/repository/auth_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 //TODO Error Handling For All

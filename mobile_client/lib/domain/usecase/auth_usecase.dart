@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:track_mingle/core/error/failure.dart';
 import 'package:track_mingle/core/usecase/usecase.dart';
-import 'package:track_mingle/features/auth/domain/auth_entity.dart';
-import 'package:track_mingle/features/auth/domain/auth_repository.dart';
+import 'package:track_mingle/domain/entity/auth_entity.dart';
+import 'package:track_mingle/domain/repository/auth_repository.dart';
 
 class WatchAuthUsecase extends UsecaseStream<Params, AuthEntity> {
   final AuthRepository repository;

@@ -1,5 +1,5 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:track_mingle/features/auth/domain/auth_entity.dart';
+import 'package:track_mingle/domain/entity/auth_entity.dart';
 
 class AuthModel extends AuthEntity {
   const AuthModel({

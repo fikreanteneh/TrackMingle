@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:track_mingle/core/error/failure.dart';
-import 'package:track_mingle/features/auth/domain/auth_entity.dart';
+import 'package:track_mingle/domain/entity/auth_entity.dart';
 
 abstract class AuthRepository {
   Stream<Either<Failure, AuthEntity>> getCurrentUser();

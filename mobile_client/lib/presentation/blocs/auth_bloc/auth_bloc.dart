@@ -5,8 +5,8 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:track_mingle/core/error/failure.dart';
 import 'package:track_mingle/core/usecase/usecase.dart';
-import 'package:track_mingle/features/auth/domain/auth_entity.dart';
-import 'package:track_mingle/features/auth/domain/auth_usecase.dart';
+import 'package:track_mingle/domain/entity/auth_entity.dart';
+import 'package:track_mingle/domain/usecase/auth_usecase.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';

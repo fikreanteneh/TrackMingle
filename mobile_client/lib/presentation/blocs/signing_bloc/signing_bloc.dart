@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:track_mingle/features/auth/domain/auth_entity.dart';
-import 'package:track_mingle/features/auth/domain/auth_repository.dart';
+import 'package:track_mingle/domain/entity/auth_entity.dart';
+import 'package:track_mingle/domain/repository/auth_repository.dart';
 
 part 'signing_event.dart';
 part 'signing_state.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:track_mingle/features/auth/presentation/widget/custome_textfield.dart';
+import 'package:track_mingle/presentation/screens/auth/common/custome_textfield.dart';
 
 class SignInSlide extends StatefulWidget {
   const SignInSlide({super.key});

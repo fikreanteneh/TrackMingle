@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:track_mingle/features/auth/presentation/bloc/auth_bloc/auth_bloc.dart';
+import 'package:track_mingle/presentation/blocs/auth_bloc/auth_bloc.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

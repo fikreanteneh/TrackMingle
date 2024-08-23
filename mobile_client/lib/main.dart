@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:track_mingle/core/utils/bloc_observer.dart';
-import 'package:track_mingle/features/auth/presentation/bloc/auth_bloc/auth_bloc.dart';
-import 'package:track_mingle/features/routers/router.dart';
+import 'package:track_mingle/presentation/blocs/auth_bloc/auth_bloc.dart';
+import 'package:track_mingle/routers/router.dart';
 import 'package:track_mingle/injection_container.dart' as injection_container;
 import 'package:track_mingle/injection_container.dart';
 

@@ -5,11 +5,11 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:track_mingle/core/config/google_config.dart';
 import 'package:track_mingle/core/config/supabase_config.dart';
 import 'package:track_mingle/core/network/network_info.dart';
-import 'package:track_mingle/features/auth/data/auth_repository_impl.dart';
-import 'package:track_mingle/features/auth/domain/auth_repository.dart';
-import 'package:track_mingle/features/auth/domain/auth_usecase.dart';
-import 'package:track_mingle/features/auth/presentation/bloc/auth_bloc/auth_bloc.dart';
-import 'package:track_mingle/features/auth/presentation/bloc/signing_bloc/signing_bloc.dart';
+import 'package:track_mingle/data/repository_impl/auth_repository_impl.dart';
+import 'package:track_mingle/domain/repository/auth_repository.dart';
+import 'package:track_mingle/domain/usecase/auth_usecase.dart';
+import 'package:track_mingle/presentation/blocs/auth_bloc/auth_bloc.dart';
+import 'package:track_mingle/presentation/blocs/signing_bloc/signing_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final serviceLocator = GetIt.instance;
