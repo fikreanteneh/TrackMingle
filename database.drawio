@@ -1,11 +1,11 @@
 <mxfile host="65bd71144e">
     <diagram id="3B1NLTd45HHyplxFVydc" name="Page-1">
-        <mxGraphModel dx="1164" dy="1015" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="980" dy="787" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
                 <mxCell id="10" value="Auth" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;rounded=1;" parent="1" vertex="1">
-                    <mxGeometry x="90" y="180" width="180" height="200" as="geometry"/>
+                    <mxGeometry x="70" y="100" width="180" height="200" as="geometry"/>
                 </mxCell>
                 <mxCell id="11" value="&lt;ul&gt;&lt;li&gt;id: string&lt;/li&gt;&lt;li&gt;role: &quot;admin&quot;, &quot;user&quot;&lt;/li&gt;&lt;li&gt;email: string&lt;/li&gt;&lt;li&gt;phoneNumber?: string&lt;/li&gt;&lt;li&gt;oauth: boolean&lt;/li&gt;&lt;li&gt;password?: string&lt;/li&gt;&lt;li&gt;createdAt: string&lt;/li&gt;&lt;/ul&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;rounded=1;" parent="10" vertex="1">
                     <mxGeometry y="26" width="180" height="174" as="geometry"/>
