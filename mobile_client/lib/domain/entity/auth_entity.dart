@@ -9,14 +9,19 @@ class AuthEntity extends Equatable {
   List<Object?> get props => [token, email, id];
 }
 
-
-
-class AuthWithEmailEntity extends Equatable {
+class AuthSignInEmailEntity extends Equatable {
   final String email, password;
-  const AuthWithEmailEntity({required this.email, required this.password});
-  
+  const AuthSignInEmailEntity({required this.email, required this.password});
+
   @override
-  // TODO: implement props
   List<Object?> get props => [email, password];
-  
+}
+
+class AuthSignUpEmailEntity extends Equatable {
+  final String email, password, username, fullName;
+  const AuthSignUpEmailEntity(this.username, this.fullName,
+      {required this.email, required this.password});
+
+  @override
+  List<Object?> get props => [email, password, username, fullName];
 }

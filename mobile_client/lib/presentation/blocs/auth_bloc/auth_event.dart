@@ -7,6 +7,13 @@ sealed class AuthBlocEvent extends Equatable {
   List<Object> get props => [];
 }
 
-
-
 class AuthWatch extends AuthBlocEvent {}
+
+class AuthSignIn extends AuthBlocEvent {
+  final AuthSignInEmailEntity authSignInEmailEntity;
+
+  const AuthSignIn(this.authSignInEmailEntity);
+
+  @override
+  List<Object> get props => [authSignInEmailEntity];
+}

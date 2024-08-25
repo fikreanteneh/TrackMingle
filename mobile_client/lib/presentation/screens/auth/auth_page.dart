@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:track_mingle/presentation/screens/auth/sign_in_slide.dart';
 import 'package:track_mingle/presentation/screens/auth/sign_up_slide.dart';
 
@@ -10,31 +10,23 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-  static const Map<String, int> authStates = {
-    "SIGNIN": 0,
-    "SIGNUP": 1,
-    "FORGOT_PASSWORD": 2
-  };
+  // 0 - Sign In,  1 - Sign Up
   int _currentIndex = 0;
-  void _changeSlide(String page) {
+  void _changeSlide(int slideNumber) {
     setState(() {
-      _currentIndex = authStates[page]!;
+      _currentIndex = slideNumber;
     });
-  }
-
-  List<Widget> slides = [];
-
-  @override
-  void initState() {
-    super.initState();
-    slides = [SignInSlide(), SignUpSlide()];
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Center(
-      child: slides[_currentIndex],
-    ));
+    List<Widget> slides = [
+      SignInSlide(onSignUpSlide: () => _changeSlide(1)),
+      SignUpSlide(onSignInSlide: () => _changeSlide(0))
+    ];
+
+    return Scaffold(
+      body: Container(child: slides[_currentIndex]),
+    );
   }
 }

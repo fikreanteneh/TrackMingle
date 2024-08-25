@@ -4,9 +4,12 @@ import 'package:track_mingle/domain/entity/auth_entity.dart';
 
 abstract class AuthRepository {
   Stream<Either<Failure, AuthEntity>> getCurrentUser();
+
   Future<Either<Failure, bool>> signInWithGoogle();
+
   Future<Either<Failure, bool>> signInWithEmail(
-      AuthWithEmailEntity authWithEmailEntity);
+      AuthSignInEmailEntity authWithEmailEntity);
+
   Future<Either<Failure, bool>> signUpWithEmail(
-      AuthWithEmailEntity authWithEmailEntity);
+      AuthSignUpEmailEntity authWithEmailEntity);
 }

@@ -7,16 +7,14 @@ sealed class SigningEvent extends Equatable {
   List<Object> get props => [];
 }
 
-
-
 class SignInWithGoogle extends SigningEvent {}
 
 class SignInWithEmail extends SigningEvent {
-  final AuthWithEmailEntity authWithEmailEntity;
-  SignInWithEmail(this.authWithEmailEntity);
+  final AuthSignInEmailEntity authWithEmailEntity;
+  const SignInWithEmail(this.authWithEmailEntity);
 }
 
 class SignUpWithEmail extends SigningEvent {
-  final AuthWithEmailEntity authWithEmailEntity;
-  SignUpWithEmail(this.authWithEmailEntity);
+  final AuthSignInEmailEntity authWithEmailEntity;
+  const SignUpWithEmail(this.authWithEmailEntity);
 }

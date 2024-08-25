@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:dartz/dartz.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:track_mingle/core/error/failure.dart';
 import 'package:track_mingle/data/models/auth_model.dart';
 import 'package:track_mingle/domain/entity/auth_entity.dart';
 import 'package:track_mingle/domain/repository/auth_repository.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 //TODO Error Handling For All
 class AuthRepositoryImpl implements AuthRepository {
@@ -34,13 +34,14 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Either<Failure, bool>> signInWithEmail(
-      AuthWithEmailEntity authWithEmailEntity) async {
-    await supabase.auth.signInWithPassword(
+      AuthSignInEmailEntity authWithEmailEntity) async {
+    var res = await supabase.auth.signInWithPassword(
         password: authWithEmailEntity.password,
         email: authWithEmailEntity.email);
     return const Right(true);
   }
 
+  //TODO: Implement Signin with Google
   @override
   Future<Either<Failure, bool>> signInWithGoogle() async {
     final googleUser = await googleSignIn.signIn();
@@ -65,10 +66,10 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Either<Failure, bool>> signUpWithEmail(
-      AuthWithEmailEntity authWithEmailEntity) async {
-    await supabase.auth.signUp(
-        password: authWithEmailEntity.password,
-        email: authWithEmailEntity.email);
-    return const Right(true);
+      AuthSignUpEmailEntity authWithEmailEntity) async {
+    // await supabase.auth.signUp(
+    //     password: authWithEmailEntity.password,
+    //     email: authWithEmailEntity.email);
+    return const Left(Failure(message: "Unimplemented", statusCode: 500));
   }
 }
