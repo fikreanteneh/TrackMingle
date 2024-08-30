@@ -1,84 +1,107 @@
 import { Request as ERequest } from "express";
-import { Get, Path, Post, Put, Request, Route, Security, Tags } from "tsoa";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Path,
+  Post,
+  Put,
+  Query,
+  Request,
+  Route,
+  Security,
+  Tags,
+} from "tsoa";
 import { AuthDetailDTO } from "../../application/dtos/auth.dto";
+import {
+  FriendRequestCreateDTO,
+  FriendRequestDetailDTO,
+} from "../../application/dtos/friend.request.dto";
 import { FriendRequestService } from "../../application/services/friend.request.service";
-import { prisma } from "../../config/prisma";
-import FriendRepository from "../../infrastructure/repositories/friend.repository";
-import FriendRequestRepository from "../../infrastructure/repositories/friend.request.repository";
 import {
   responseHandler,
   ResponseSuccessType,
 } from "../middlewares/response.middleware";
 
 @Tags("Friend Request")
-@Route("friendRequest")
+@Route("friend_request")
 @Security("BearerAuth")
-export class FriendRequestController {
-  @Post("{id}")
+export class FriendRequestController extends Controller {
+  private friendRequestService: FriendRequestService;
+  constructor(friendRequestService: FriendRequestService) {
+    super();
+    this.friendRequestService = friendRequestService;
+  }
+  @Post("")
   public async createFriendRequest(
     @Request() request: ERequest,
-    @Path() id: string
-  ): Promise<ResponseSuccessType<any>> {
-    const service = new FriendRequestService(
-      new FriendRequestRepository(prisma()),
-      new FriendRepository(prisma())
-    );
-    const response = await service.createFriendRequest(
+    @Body() body: FriendRequestCreateDTO
+  ): Promise<ResponseSuccessType<null>> {
+    const response = await this.friendRequestService.createFriendRequest(
       request.user as AuthDetailDTO,
-      null,
-      {
-        id: id,
-      }
+      body,
+      null
     );
-    return responseHandler<any>(response);
+    return responseHandler<null>(response);
   }
   @Put("{id}")
   public async acceptFriendRequest(
     @Request() request: ERequest,
     @Path() id: string
-  ): Promise<ResponseSuccessType<any>> {
-    const service = new FriendRequestService(
-      new FriendRequestRepository(prisma()),
-      new FriendRepository(prisma())
-    );
-    const response = await service.acceptFriendRequest(
+  ): Promise<ResponseSuccessType<null>> {
+    const response = await this.friendRequestService.acceptFriendRequest(
       request.user as AuthDetailDTO,
       null,
       { id: id }
     );
-    return responseHandler<any>(response);
+    return responseHandler<null>(response);
+  }
+
+  @Delete("{id}")
+  public async rejectFriendRequest(
+    @Request() request: ERequest,
+    @Path() id: string
+  ): Promise<ResponseSuccessType<null>> {
+    const response = await this.friendRequestService.rejectFriendRequest(
+      request.user as AuthDetailDTO,
+      null,
+      { id: id }
+    );
+    return responseHandler<null>(response);
   }
 
   @Get("sent")
   public async getSentFriendRequests(
-    @Request() request: ERequest
-  ): Promise<ResponseSuccessType<any>> {
-    const service = new FriendRequestService(
-      new FriendRequestRepository(prisma()),
-      new FriendRepository(prisma())
+    @Request() request: ERequest,
+    @Query() page: number,
+    @Query() size: number
+  ): Promise<ResponseSuccessType<FriendRequestDetailDTO>> {
+    const response = await this.friendRequestService.getSentFriendRequests(
+      request.user as AuthDetailDTO,
+      null,
+      {
+        pageSize: size ?? 50,
+        pageNumber: page ?? 0,
+      }
     );
-    return service.getSentFriendRequests(request.user as AuthDetailDTO, null, {
-      pageSize: 100,
-      pageNumber: 0,
-    });
+    return responseHandler<FriendRequestDetailDTO>(response);
   }
 
   @Get("received")
   public async getFriendRequests(
-    @Request() request: ERequest
+    @Request() request: ERequest,
+    @Query() page: number,
+    @Query() size: number
   ): Promise<ResponseSuccessType<any>> {
-    const service = new FriendRequestService(
-      new FriendRequestRepository(prisma()),
-      new FriendRepository(prisma())
-    );
-    const response = await service.getFriendRequests(
+    const response = await this.friendRequestService.getFriendRequests(
       request.user as AuthDetailDTO,
       null,
       {
-        pageSize: 100,
-        pageNumber: 0,
+        pageSize: size ?? 50,
+        pageNumber: page ?? 0,
       }
     );
-    return responseHandler<any>(response);
+    return responseHandler<FriendRequestDetailDTO>(response);
   }
 }

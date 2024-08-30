@@ -1,14 +1,11 @@
 import { BaseDTO } from "./base.dto";
 
-
 export interface UserMetadataCustom {
   username: string | null;
   fullName: string | null;
   userId: string | null;
   profilePicture: string | null;
 }
-
-
 
 export interface AuthDetailDTO extends BaseDTO {
   email: string;
@@ -18,10 +15,10 @@ export interface AuthDetailDTO extends BaseDTO {
 }
 
 export interface AuthDTO {
-  email: string;
+  email?: string;
+  phone?: string;
   password: string;
 }
-
 
 export interface AuthTokenDTO {
   token: string;

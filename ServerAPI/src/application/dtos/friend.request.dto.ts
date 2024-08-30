@@ -8,7 +8,12 @@ export interface FriendRequestDTO extends BaseDTO {
   createdAt: Date;
 }
 export interface FriendRequestDetailDTO extends FriendRequestDTO {
-  Sender: UserDTO;
+  Sender?: UserDTO;
+  Receiver?: UserDTO;
+}
+
+export interface FriendRequestCreateDTO {
+  receiverId: string;
 }
 
 export interface FriendRequestGetParam extends IDParam, PageParam {}

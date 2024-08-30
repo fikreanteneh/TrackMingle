@@ -1,5 +1,13 @@
 import { Request as ERequest } from "express";
-import { Get, Path, Request, Route, SuccessResponse, Tags } from "tsoa";
+import {
+  Controller,
+  Get,
+  Path,
+  Request,
+  Route,
+  SuccessResponse,
+  Tags,
+} from "tsoa";
 import { AuthDetailDTO } from "../../application/dtos/auth.dto";
 import { FriendMinimalDTO } from "../../application/dtos/friend.dto";
 import FriendService from "../../application/services/friend.service";
@@ -12,7 +20,7 @@ import {
 
 @Tags("Friends")
 @Route("{id}/friends")
-export class FriendController {
+export class FriendController extends Controller {
   @Get("")
   @SuccessResponse("200")
   public async register(
