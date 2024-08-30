@@ -12,9 +12,10 @@ export default class FriendService {
   }
   async getAllMyFriendsMinimal(
     currUser: AuthDetailDTO,
-    payload: IDParam
+    payload: null,
+    params: IDParam
   ): Promise<FriendMinimalDTO> {
-    const data = await this.friendRepository.getFriendsByIDMinimal(payload.id);
+    const data = await this.friendRepository.getFriendsByIDMinimal(params.id);
     return { friends: [...data.map((friend) => friend.friendId)] };
   }
   // async getAllMyFriends(currUser: AuthDetailDTO, payload: IDParam & PageParam): Promise<FriendListDTO> {
