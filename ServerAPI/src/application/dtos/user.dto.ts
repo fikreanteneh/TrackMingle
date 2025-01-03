@@ -1,8 +1,6 @@
 import { BaseDTO } from "./base.dto";
 import { FriendRequestDTO } from "./friend.request.dto";
 
-
-
 export interface UserDTO extends BaseDTO {
   username: string;
   fullName?: string;
@@ -11,6 +9,8 @@ export interface UserDTO extends BaseDTO {
   linkedin?: string;
   facebook?: string;
   instagram?: string;
+  telegram?: String;
+  website?: String;
   phoneNumber?: string;
   createdAt: Date;
 }
@@ -21,7 +21,6 @@ export interface UserPersonalDTO extends UserDTO {
   Friends?: UserDTO[];
   updatedAt: Date;
 }
-
 
 export interface UserCreateDTO {
   username: string;
@@ -40,9 +39,11 @@ export interface UpdateProfilePictureDTO {
   profilePicture: File;
 }
 
-export interface UpdateLinksDTO { 
+export interface UpdateLinksDTO {
   twitter?: string;
   linkedin?: string;
   facebook?: string;
   instagram?: string;
+  telegram?: String;
+  website?: String;
 }

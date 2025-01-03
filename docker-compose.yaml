@@ -1,0 +1,24 @@
+services:
+  pubsub:
+    image: "redis:alpine"
+    container_name: pubsub
+    ports:
+      - "6379:6379"
+
+  serverapi:
+    build: ./ServerAPI
+    container_name: serverapi
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./ServerAPI/.env
+
+  websocketserver:
+    build: ./WebSocketServer
+    container_name: websocketserver
+    ports:
+      - "5555:5555"
+    depends_on:
+      - pubsub
+    env_file:
+      - ./WebSocketServer/.env.prod

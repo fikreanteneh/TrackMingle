@@ -1,9 +1,9 @@
 package features
 
 import (
+	"WebSocketServer/config"
 	"WebSocketServer/internal/application/dtos"
 	"WebSocketServer/internal/application/interfaces"
-	"WebSocketServer/internal/config"
 	"time"
 )
 
@@ -13,18 +13,19 @@ type TrackFeature struct {
 	friendAPIService interfaces.FriendAPIServiceInterface
 }
 
-func (feature *TrackFeature) UpdateMyLocation(currUser *dtos.AuthDetailDTO, payload dtos.LocationDTO) (string, error) {
+func (feature *TrackFeature) UpdateMyLocation(currUser *dtos.AuthDetailDTO, payload dtos.LocationDTO) (any, error) {
 	feature.cachingService.UpdateLocation(dtos.LocationHistoryDTO{
 		UserID:    currUser.ID,
 		Latitude:  payload.Latitude,
 		Longitude: payload.Longitude,
+		Username:  currUser.Username,
 		CreatedAt: time.Now(),
 	})
-	return "Succssfully updated new location", nil
+	return nil, nil
 }
 
 func (feature *TrackFeature) GetLocationUpdate(currUser *dtos.AuthDetailDTO, payload func([]byte) error) (any, error) {
-	friendIds, err := feature.friendAPIService.GetAllFriends(currUser.ID)
+	friendIds, err := feature.friendAPIService.GetAllFriends(currUser)
 	if err != nil {
 		return nil, err
 	}

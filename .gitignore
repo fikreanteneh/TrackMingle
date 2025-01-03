@@ -1,3 +1,5 @@
 *.csv
 TestingServer/
+.env
+.env.prod
 build/

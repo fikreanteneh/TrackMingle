@@ -30,10 +30,11 @@ func (c *ConnectionHandler) EstablishConnection(w http.ResponseWriter, r *http.R
 		return
 	}
 	trackFeature := c.trackFeatureInstantiate()
-	// This Listen to Friend location Updates will continue in a new goroutine
-	go ListenToUpdatesHandler(ws, currUser, trackFeature)
 	//This Listen to Client will continue in this goroutine
 	go ListenToClientHandler(ws, currUser, trackFeature)
+	// This Listen to Friend location Updates will continue in a new goroutine
+	go ListenToUpdatesHandler(ws, currUser, trackFeature)
+
 }
 
 func NewConnectionHandler(

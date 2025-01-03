@@ -20,8 +20,6 @@ export default class FriendRequestRepository
     pageSize: number = 100,
     pageNumber: number = 0
   ): Promise<FriendRequestModel> {
-    const x = this.prisma;
-    const y = this.model;
     const records = await this.model.findMany({
       where: {
         senderId: id,

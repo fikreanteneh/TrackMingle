@@ -11,5 +11,6 @@
       "username": "postgres",
       "password": "12345678"
     }
-  ]
+  ],
+  "cmake.sourceDirectory": "D:/Projects/TrackMingle/mobile_client/linux"
 }

@@ -58,6 +58,12 @@
 					"instagram": {
 						"type": "string"
 					},
+					"telegram": {
+						"type": "string"
+					},
+					"website": {
+						"type": "string"
+					},
 					"phoneNumber": {
 						"type": "string"
 					},
@@ -98,6 +104,12 @@
 						"type": "string"
 					},
 					"instagram": {
+						"type": "string"
+					},
+					"telegram": {
+						"type": "string"
+					},
+					"website": {
 						"type": "string"
 					},
 					"phoneNumber": {
@@ -152,6 +164,12 @@
 					},
 					"instagram": {
 						"type": "string"
+					},
+					"telegram": {
+						"type": "string"
+					},
+					"website": {
+						"type": "string"
 					}
 				},
 				"type": "object",
@@ -177,6 +195,101 @@
 				},
 				"required": [
 					"fullName"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResponseSuccessType_null_": {
+				"properties": {
+					"success": {
+						"type": "boolean"
+					},
+					"error": {
+						"type": "number",
+						"enum": [
+							null
+						],
+						"nullable": true
+					},
+					"response": {
+						"type": "number",
+						"enum": [
+							null
+						],
+						"nullable": true
+					}
+				},
+				"required": [
+					"success",
+					"error",
+					"response"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"FriendRequestCreateDTO": {
+				"properties": {
+					"receiverId": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"receiverId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"FriendRequestDetailDTO": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"senderId": {
+						"type": "string"
+					},
+					"receiverId": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"Sender": {
+						"$ref": "#/components/schemas/UserDTO"
+					},
+					"Receiver": {
+						"$ref": "#/components/schemas/UserDTO"
+					}
+				},
+				"required": [
+					"id",
+					"senderId",
+					"receiverId",
+					"createdAt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResponseSuccessType_FriendRequestDetailDTO_": {
+				"properties": {
+					"success": {
+						"type": "boolean"
+					},
+					"error": {
+						"type": "number",
+						"enum": [
+							null
+						],
+						"nullable": true
+					},
+					"response": {
+						"$ref": "#/components/schemas/FriendRequestDetailDTO"
+					}
+				},
+				"required": [
+					"success",
+					"error",
+					"response"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -283,12 +396,14 @@
 					"email": {
 						"type": "string"
 					},
+					"phone": {
+						"type": "string"
+					},
 					"password": {
 						"type": "string"
 					}
 				},
 				"required": [
-					"email",
 					"password"
 				],
 				"type": "object",
@@ -462,7 +577,7 @@
 				}
 			}
 		},
-		"/friendRequest/{id}": {
+		"/friend_request": {
 			"post": {
 				"operationId": "CreateFriendRequest",
 				"responses": {
@@ -471,7 +586,43 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/ResponseSuccessType_any_"
+									"$ref": "#/components/schemas/ResponseSuccessType_null_"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Friend Request"
+				],
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/FriendRequestCreateDTO"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/friend_request/{id}": {
+			"put": {
+				"operationId": "AcceptFriendRequest",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseSuccessType_null_"
 								}
 							}
 						}
@@ -496,15 +647,15 @@
 					}
 				]
 			},
-			"put": {
-				"operationId": "AcceptFriendRequest",
+			"delete": {
+				"operationId": "RejectFriendRequest",
 				"responses": {
 					"200": {
 						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/ResponseSuccessType_any_"
+									"$ref": "#/components/schemas/ResponseSuccessType_null_"
 								}
 							}
 						}
@@ -530,7 +681,7 @@
 				]
 			}
 		},
-		"/friendRequest/sent": {
+		"/friend_request/sent": {
 			"get": {
 				"operationId": "GetSentFriendRequests",
 				"responses": {
@@ -539,7 +690,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/ResponseSuccessType_any_"
+									"$ref": "#/components/schemas/ResponseSuccessType_FriendRequestDetailDTO_"
 								}
 							}
 						}
@@ -553,10 +704,29 @@
 						"BearerAuth": []
 					}
 				],
-				"parameters": []
+				"parameters": [
+					{
+						"in": "query",
+						"name": "page",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "size",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		},
-		"/friendRequest/received": {
+		"/friend_request/received": {
 			"get": {
 				"operationId": "GetFriendRequests",
 				"responses": {
@@ -579,12 +749,31 @@
 						"BearerAuth": []
 					}
 				],
-				"parameters": []
+				"parameters": [
+					{
+						"in": "query",
+						"name": "page",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "size",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		},
-		"/{id}/friends": {
+		"/friends": {
 			"get": {
-				"operationId": "Register",
+				"operationId": "GetMyFriends",
 				"responses": {
 					"200": {
 						"description": "",
@@ -600,7 +789,56 @@
 				"tags": [
 					"Friends"
 				],
-				"security": [],
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "page",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "size",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/friends/{id}": {
+			"get": {
+				"operationId": "GetFriendsByID",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseSuccessType_FriendMinimalDTO_"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Friends"
+				],
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -608,6 +846,24 @@
 						"required": true,
 						"schema": {
 							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "size",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
 						}
 					}
 				]

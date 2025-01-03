@@ -44,6 +44,8 @@ const models: TsoaRoute.Models = {
             "linkedin": {"dataType":"string"},
             "facebook": {"dataType":"string"},
             "instagram": {"dataType":"string"},
+            "telegram": {"dataType":"string"},
+            "website": {"dataType":"string"},
             "phoneNumber": {"dataType":"string"},
             "createdAt": {"dataType":"datetime","required":true},
         },
@@ -61,6 +63,8 @@ const models: TsoaRoute.Models = {
             "linkedin": {"dataType":"string"},
             "facebook": {"dataType":"string"},
             "instagram": {"dataType":"string"},
+            "telegram": {"dataType":"string"},
+            "website": {"dataType":"string"},
             "phoneNumber": {"dataType":"string"},
             "createdAt": {"dataType":"datetime","required":true},
             "SentRequests": {"dataType":"array","array":{"dataType":"refObject","ref":"FriendRequestDTO"}},
@@ -78,6 +82,8 @@ const models: TsoaRoute.Models = {
             "linkedin": {"dataType":"string"},
             "facebook": {"dataType":"string"},
             "instagram": {"dataType":"string"},
+            "telegram": {"dataType":"string"},
+            "website": {"dataType":"string"},
         },
         "additionalProperties": false,
     },
@@ -94,6 +100,47 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "fullName": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ResponseSuccessType_null_": {
+        "dataType": "refObject",
+        "properties": {
+            "success": {"dataType":"boolean","required":true},
+            "error": {"dataType":"enum","enums":[null],"required":true},
+            "response": {"dataType":"enum","enums":[null],"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "FriendRequestCreateDTO": {
+        "dataType": "refObject",
+        "properties": {
+            "receiverId": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "FriendRequestDetailDTO": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"string","required":true},
+            "senderId": {"dataType":"string","required":true},
+            "receiverId": {"dataType":"string","required":true},
+            "createdAt": {"dataType":"datetime","required":true},
+            "Sender": {"ref":"UserDTO"},
+            "Receiver": {"ref":"UserDTO"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ResponseSuccessType_FriendRequestDetailDTO_": {
+        "dataType": "refObject",
+        "properties": {
+            "success": {"dataType":"boolean","required":true},
+            "error": {"dataType":"enum","enums":[null],"required":true},
+            "response": {"ref":"FriendRequestDetailDTO","required":true},
         },
         "additionalProperties": false,
     },
@@ -147,7 +194,8 @@ const models: TsoaRoute.Models = {
     "AuthDTO": {
         "dataType": "refObject",
         "properties": {
-            "email": {"dataType":"string","required":true},
+            "email": {"dataType":"string"},
+            "phone": {"dataType":"string"},
             "password": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
@@ -326,7 +374,7 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.post('/friendRequest/:id',
+        app.post('/friend_request',
             authenticateMiddleware([{"BearerAuth":[]}]),
             ...(fetchMiddlewares<RequestHandler>(FriendRequestController)),
             ...(fetchMiddlewares<RequestHandler>(FriendRequestController.prototype.createFriendRequest)),
@@ -334,7 +382,7 @@ export function RegisterRoutes(app: Router) {
             async function FriendRequestController_createFriendRequest(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
                     request: {"in":"request","name":"request","required":true,"dataType":"object"},
-                    id: {"in":"path","name":"id","required":true,"dataType":"string"},
+                    body: {"in":"body","name":"body","required":true,"ref":"FriendRequestCreateDTO"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -363,7 +411,7 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.put('/friendRequest/:id',
+        app.put('/friend_request/:id',
             authenticateMiddleware([{"BearerAuth":[]}]),
             ...(fetchMiddlewares<RequestHandler>(FriendRequestController)),
             ...(fetchMiddlewares<RequestHandler>(FriendRequestController.prototype.acceptFriendRequest)),
@@ -400,7 +448,44 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/friendRequest/sent',
+        app.delete('/friend_request/:id',
+            authenticateMiddleware([{"BearerAuth":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(FriendRequestController)),
+            ...(fetchMiddlewares<RequestHandler>(FriendRequestController.prototype.rejectFriendRequest)),
+
+            async function FriendRequestController_rejectFriendRequest(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    id: {"in":"path","name":"id","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const container: IocContainer = typeof iocContainer === 'function' ? (iocContainer as IocContainerFactory)(request) : iocContainer;
+
+                const controller: any = await container.get<FriendRequestController>(FriendRequestController);
+                if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+                }
+
+              await templateService.apiHandler({
+                methodName: 'rejectFriendRequest',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/friend_request/sent',
             authenticateMiddleware([{"BearerAuth":[]}]),
             ...(fetchMiddlewares<RequestHandler>(FriendRequestController)),
             ...(fetchMiddlewares<RequestHandler>(FriendRequestController.prototype.getSentFriendRequests)),
@@ -408,6 +493,8 @@ export function RegisterRoutes(app: Router) {
             async function FriendRequestController_getSentFriendRequests(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
                     request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    page: {"in":"query","name":"page","required":true,"dataType":"double"},
+                    size: {"in":"query","name":"size","required":true,"dataType":"double"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -436,7 +523,7 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/friendRequest/received',
+        app.get('/friend_request/received',
             authenticateMiddleware([{"BearerAuth":[]}]),
             ...(fetchMiddlewares<RequestHandler>(FriendRequestController)),
             ...(fetchMiddlewares<RequestHandler>(FriendRequestController.prototype.getFriendRequests)),
@@ -444,6 +531,8 @@ export function RegisterRoutes(app: Router) {
             async function FriendRequestController_getFriendRequests(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
                     request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    page: {"in":"query","name":"page","required":true,"dataType":"double"},
+                    size: {"in":"query","name":"size","required":true,"dataType":"double"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -472,14 +561,16 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/:id/friends',
+        app.get('/friends',
+            authenticateMiddleware([{"BearerAuth":[]}]),
             ...(fetchMiddlewares<RequestHandler>(FriendController)),
-            ...(fetchMiddlewares<RequestHandler>(FriendController.prototype.register)),
+            ...(fetchMiddlewares<RequestHandler>(FriendController.prototype.getMyFriends)),
 
-            async function FriendController_register(request: ExRequest, response: ExResponse, next: any) {
+            async function FriendController_getMyFriends(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
                     request: {"in":"request","name":"request","required":true,"dataType":"object"},
-                    id: {"in":"path","name":"id","required":true,"dataType":"string"},
+                    page: {"in":"query","name":"page","required":true,"dataType":"double"},
+                    size: {"in":"query","name":"size","required":true,"dataType":"double"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -496,7 +587,46 @@ export function RegisterRoutes(app: Router) {
                 }
 
               await templateService.apiHandler({
-                methodName: 'register',
+                methodName: 'getMyFriends',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: 200,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/friends/:id',
+            authenticateMiddleware([{"BearerAuth":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(FriendController)),
+            ...(fetchMiddlewares<RequestHandler>(FriendController.prototype.getFriendsByID)),
+
+            async function FriendController_getFriendsByID(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    id: {"in":"path","name":"id","required":true,"dataType":"string"},
+                    page: {"in":"query","name":"page","required":true,"dataType":"double"},
+                    size: {"in":"query","name":"size","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const container: IocContainer = typeof iocContainer === 'function' ? (iocContainer as IocContainerFactory)(request) : iocContainer;
+
+                const controller: any = await container.get<FriendController>(FriendController);
+                if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+                }
+
+              await templateService.apiHandler({
+                methodName: 'getFriendsByID',
                 controller,
                 response,
                 next,

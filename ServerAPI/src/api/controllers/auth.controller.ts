@@ -37,10 +37,6 @@ export class AuthController extends Controller {
   public async login(
     @Body() requestBody: AuthDTO
   ): Promise<ResponseSuccessType<AuthTokenDTO>> {
-    // const service = new AuthService(
-    //   new AuthenticationProvider(supabase()),
-    //   new UserRepository(prisma())
-    // );
     const response = await this.authService.login(null, requestBody, null);
     return responseHandler<AuthTokenDTO>(response);
   }

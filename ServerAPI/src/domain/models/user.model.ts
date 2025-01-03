@@ -10,6 +10,8 @@ export interface UserModel extends BaseModel {
   facebook?: string;
   instagram?: string;
   phoneNumber?: string;
+  telegram?: String;
+  website?: String;
   createdAt?: Date;
   updatedAt?: Date;
   Friends?: UserModel[];

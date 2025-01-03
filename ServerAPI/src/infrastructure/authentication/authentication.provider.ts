@@ -1,4 +1,5 @@
-import { container, inject, singleton } from "tsyringe";
+import { SupabaseClient } from "@supabase/supabase-js";
+import { inject, singleton } from "tsyringe";
 import {
   AuthDetailDTO,
   AuthDTO,
@@ -6,7 +7,6 @@ import {
   UserMetadataCustom,
 } from "../../application/dtos/auth.dto";
 import { IAuthenticationProvider } from "../../application/interfaces/authentication/authentication.provider";
-import { SupabaseClient } from "@supabase/supabase-js";
 
 //TODO: iMPLEMENT Error Handling
 @singleton()
@@ -17,9 +17,11 @@ export default class AuthenticationProvider implements IAuthenticationProvider {
     this.supabase = supabase;
   }
   async signIn(payload: AuthDTO): Promise<AuthTokenDTO> {
+    //TODO: Handle only Phone Login
     const { data, error } = await this.supabase.auth.signInWithPassword({
-      email: payload.email,
+      email: payload.email ?? "",
       password: payload.password,
+      phone: payload.phone,
     });
     if (error) throw error;
     return { token: data.session.access_token };
@@ -49,7 +51,6 @@ export default class AuthenticationProvider implements IAuthenticationProvider {
 
   async verify(payload: AuthTokenDTO): Promise<AuthDetailDTO> {
     const { data, error } = await this.supabase.auth.getUser(payload.token);
-    let x = data.user?.user_metadata;
     if (error) throw new Error("Unauthorized");
     return {
       id: data.user.id,

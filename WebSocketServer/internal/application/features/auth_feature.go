@@ -1,9 +1,9 @@
 package features
 
 import (
+	"WebSocketServer/config"
 	"WebSocketServer/internal/application/dtos"
 	"WebSocketServer/internal/application/interfaces"
-	"WebSocketServer/internal/config"
 )
 
 type AuthFeature struct {

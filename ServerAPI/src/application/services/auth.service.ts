@@ -17,6 +17,14 @@ export default class AuthService {
     this.userRepository = userRepository;
   }
 
+  async login(
+    currUser: null,
+    payload: AuthDTO,
+    param: null
+  ): Promise<AuthTokenDTO> {
+    return await this.authProvider.signIn(payload);
+  }
+
   async registerWithEmail(
     currUser: null,
     payload: AuthDTO & UserCreateDTO,
@@ -42,17 +50,10 @@ export default class AuthService {
   }
 
   //TODO: Registered with Phone Number
-  async registerWithPhoneNumber() {}
-
   //TODO: Registered with Google
-  async registerWithGoogle() {}
-
-  async login(
-    currUser: null,
-    payload: AuthDTO,
-    param: null
-  ): Promise<AuthTokenDTO> {
-    return await this.authProvider.signIn(payload);
-  }
-  //TODO: Implement Change Phone Number and Email and Password
+  //TODO: Implement Change Phone Number
+  //TODO: Implement Change Email
+  //TODO: Implement Change Password
+  //TODO: Implement Forgot Password
+  //TODO: Implement Verify Email and Password
 }
