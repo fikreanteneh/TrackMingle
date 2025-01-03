@@ -9,7 +9,7 @@ import (
 )
 
 func ListenToUpdatesHandler(ws *websocket.Conn, currUser *dtos.AuthDetailDTO, trackFeature *features.TrackFeature) {
-	defer ws.Close()
+	// defer ws.Close()
 	handleSendLocationUpdates := func(payload []byte) error {
 		err := ws.WriteMessage(websocket.TextMessage, payload)
 		if err != nil {
@@ -22,7 +22,11 @@ func ListenToUpdatesHandler(ws *websocket.Conn, currUser *dtos.AuthDetailDTO, tr
 		log.Println("====Update Sent===> ", currUser.ID, string(payload))
 		return nil
 	}
-	trackFeature.GetLocationUpdate(currUser, handleSendLocationUpdates)
+	_, err := trackFeature.GetLocationUpdate(currUser, handleSendLocationUpdates)
+	if err != nil {
+		log.Println("=====> ", err)
+		return
+	}
 	// for updatedLocation := range channel {
 	// 	jsonData, err := json.Marshal(updatedLocation)
 	// 	if err != nil {

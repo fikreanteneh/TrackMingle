@@ -771,9 +771,9 @@
 				]
 			}
 		},
-		"/{id}/friends": {
+		"/friends": {
 			"get": {
-				"operationId": "Register",
+				"operationId": "GetMyFriends",
 				"responses": {
 					"200": {
 						"description": "",
@@ -789,7 +789,56 @@
 				"tags": [
 					"Friends"
 				],
-				"security": [],
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "page",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "size",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/friends/{id}": {
+			"get": {
+				"operationId": "GetFriendsByID",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseSuccessType_FriendMinimalDTO_"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Friends"
+				],
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -797,6 +846,24 @@
 						"required": true,
 						"schema": {
 							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "size",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
 						}
 					}
 				]

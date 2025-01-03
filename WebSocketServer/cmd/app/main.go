@@ -1,9 +1,9 @@
 package main
 
 import (
+	"WebSocketServer/config"
 	"WebSocketServer/internal/api"
 	"WebSocketServer/internal/application/features"
-	"WebSocketServer/internal/config"
 	"WebSocketServer/internal/infrastructure"
 	"log"
 	"net/http"
@@ -17,7 +17,7 @@ func main() {
 		CheckOrigin: func(r *http.Request) bool { return true },
 	}
 
-	var cachingService = infrastructure.NewCachingService(environment.RedisURL)
+	var cachingService = infrastructure.NewCachingService(environment.RedisURL, environment.CacheTTL)
 	var authService = infrastructure.NewAuthService(environment.JwtSecret)
 	var friendService = infrastructure.NewFriendService(environment.ApiBaseURL)
 

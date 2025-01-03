@@ -7,11 +7,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/redis/go-redis/v9"
 )
 
 type CachingService struct {
+	cacheTTL    time.Duration
 	redisClient *redis.Client
 	context     context.Context
 }
@@ -29,7 +31,7 @@ func (service *CachingService) GetLocationUpdate(friendIds *[]string, handler fu
 		// 	continue
 		// }
 		if err := handler([]byte(payload)); err != nil {
-			return nil, nil
+			return nil, err
 		}
 	}
 	return nil, nil
@@ -47,14 +49,19 @@ func (service *CachingService) UpdateLocation(location dtos.LocationHistoryDTO) 
 	}
 }
 
-func NewCachingService(redisURL string) interfaces.CachingServiceInterface {
+func NewCachingService(redisURL string, cacheTTL int) interfaces.CachingServiceInterface {
 	opt, err := redis.ParseURL(redisURL)
 	if err != nil {
 		panic(err)
 	}
 	client := redis.NewClient(opt)
+	_, err = client.Ping(context.Background()).Result()
+	if err != nil {
+		panic(err)
+	}
 	return &CachingService{
 		redisClient: client,
 		context:     context.TODO(),
+		cacheTTL:    time.Duration(cacheTTL) * time.Second,
 	}
 }

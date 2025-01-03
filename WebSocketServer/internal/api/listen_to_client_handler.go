@@ -14,16 +14,16 @@ func ListenToClientHandler(ws *websocket.Conn, currUser *dtos.AuthDetailDTO, tra
 		_, p, err := ws.ReadMessage()
 		if err != nil {
 			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
-				log.Println("===> UnexpectedlyClosed: >", err)
+				log.Println("=====> UnexpectedlyClosed: >", err)
 				return
 			}
-			log.Println(" ===> Error reading message: >", err)
-			continue
+			log.Println(" =====> Error reading message: >", err)
+			return
 		}
 		var location dtos.LocationDTO
 		err = json.Unmarshal(p, &location)
 		if err != nil {
-			log.Println("===> Error unmarshalling: >", err)
+			log.Println("===> Error unmarshaling: >", err)
 			continue
 		}
 		trackFeature.UpdateMyLocation(currUser, location)
