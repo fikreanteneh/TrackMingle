@@ -2,7 +2,6 @@ package config
 
 import (
 	"os"
-	"path/filepath"
 	"strconv"
 
 	"github.com/joho/godotenv"
@@ -18,14 +17,14 @@ type Environment struct {
 
 func Load() *Environment {
 	// Load the environment variables
-	envPath, err := filepath.Abs("../../.env")
-	if err != nil {
-		panic("Error finding .env file")
-	}
-	err = godotenv.Load(envPath)
-	if err != nil {
-		panic("Error loading .env file")
-	}
+	// envPath, err := filepath.Abs("../../.env")
+	// if err != nil {
+	// 	panic("Error finding .env file")
+	// }
+	_ = godotenv.Load()
+	// if err != nil {
+	// 	panic("Error loading .env file")
+	// }
 	getEnv := func(key string) string {
 		value := os.Getenv(key)
 		if value == "" {

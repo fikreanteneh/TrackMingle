@@ -3,7 +3,8 @@ dist
 *.md
 .gitignore
 .vscode
-prisma
+prisma/migrations
 *.drawio
 vscode
+.env
 
