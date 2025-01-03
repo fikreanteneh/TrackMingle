@@ -2,3 +2,4 @@
 TestingServer/
 .env
 .env.prod
+build/

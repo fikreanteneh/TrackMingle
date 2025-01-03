@@ -4,24 +4,27 @@ import 'package:dartz/dartz.dart';
 
 import '../error/failure.dart';
 
-abstract class Usecase<Params, T> {
-  T call(Params params);
+abstract class Usecase<P, T> {
+  T call(P params);
 }
-abstract class UsecaseFuture<Params, Type> implements Usecase<Params, Future<Either<Failure, Type>>> {
+
+abstract class UsecaseFuture<P, Type>
+    implements Usecase<P, Future<Either<Failure, Type>>> {
   @override
-  Future<Either<Failure, Type>> call(Params params);
+  Future<Either<Failure, Type>> call(P params);
 }
 
-abstract class UsecaseStream<Params, Type> implements Usecase<Params, Stream<Either<Failure, Type>>> {
+abstract class UsecaseStream<P, Type>
+    implements Usecase<P, Stream<Either<Failure, Type>>> {
   @override
-  Stream<Either<Failure, Type>> call(Params params);
+  Stream<Either<Failure, Type>> call(P params);
 }
 
+// class Params<T> {
+//   final T data;
+//   Params(this.data);
+// }
 
-
-class Params<T> {
-  final T data;
-  Params(this.data);
-}
+class AnyParam {}
 
 class NoParams {}

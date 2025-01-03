@@ -12,5 +12,3 @@ class SupabaseConfig {
     return c.client;
   }
 }
-
-
